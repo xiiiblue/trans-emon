@@ -3,7 +3,7 @@ import xlrd
 from settings import *
 
 
-class XlsRepo(object):
+class Repository(object):
     """
     Excel仓库
     """
@@ -62,6 +62,12 @@ class XlsRepo(object):
         """
         dest_path = f'{self.src_path[0:-4]}{suffix}.xls'
         self.save_by_path(dest_path)
+
+    def save(self):
+        """
+        保存Excel
+        """
+        self.save_by_suffix(FILE_SUFFIX)
 
     def get_col_by_title(self, title_name):
         """
