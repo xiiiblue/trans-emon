@@ -1,5 +1,2 @@
-import difflib
-
-dict = {'a':1,'b':2}
-
-print('ab' in dict)
+for i in range(1, 5):
+    print(i)

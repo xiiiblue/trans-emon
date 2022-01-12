@@ -2,29 +2,30 @@ import hashlib
 import re
 import random
 from abc import abstractmethod
-
 import jieba
-from xlutils.copy import copy
-import xlrd
+from settings import *
+from xls_repo import XlsRepo
 
-TITLE_ROW = 1
-SHEET_IDX = 0
 FILE_SUFFIX = '(已脱敏)'
+
+"""
+Excel脱敏
+"""
 
 
 @abstractmethod
-class masker():
+class Masker(object):
     """
-    混淆策略
+    脱敏策略
     """
 
     def process(self, origin):
         raise NotImplementedError
 
 
-class phone_masker(masker):
+class PhoneMasker(Masker):
     """
-    混淆电话号码
+    电话脱敏策略
     """
 
     def process(self, origin):
@@ -34,9 +35,9 @@ class phone_masker(masker):
             return origin
 
 
-class name_masker(masker):
+class NameMasker(Masker):
     """
-    混淆人名
+    人名脱敏策略
     """
 
     def process(self, origin):
@@ -44,18 +45,18 @@ class name_masker(masker):
         return pat.sub(r'\1**', origin)
 
 
-class money_masker(masker):
+class MoneyMasker(Masker):
     """
-    混淆金额
+    金额脱敏策略
     """
 
     def process(self, origin):
         return random.randint(0, 99999)
 
 
-class hash_masker(masker):
+class hash_masker(Masker):
     """
-    哈希(相同的值混淆后可一一对应)
+    哈希脱敏策略(相同的值可对应)
     """
 
     def process(self, origin):
@@ -67,9 +68,9 @@ class hash_masker(masker):
             return origin
 
 
-class seg_masker(masker):
+class SegMasker(Masker):
     """
-    分词(对于长文本增强可读性)
+    分词脱敏策略(增强可读性)
     """
 
     def process(self, origin):
@@ -94,9 +95,9 @@ class seg_masker(masker):
         return mask_value
 
 
-class seghash_masker(seg_masker):
+class SegHashMasker(SegMasker):
     """
-    分词且哈希
+    分词加哈希脱敏策略
     """
 
     def process(self, origin):
@@ -114,97 +115,56 @@ def get_hash(origin):
     return md5.hexdigest()[8:-8]
 
 
-def get_masker(method):
+def do_masking(method, origin_value):
     """
-    获取混淆策略
-    :param method: 策略名称
-    :return:
+    数据脱敏
     """
     masker_dict = {
-        'PHONE': phone_masker(),
-        'NAME': name_masker(),
-        'MONEY': money_masker(),
+        'PHONE': PhoneMasker(),
+        'NAME': NameMasker(),
+        'MONEY': MoneyMasker(),
         'HASH': hash_masker(),
-        'SEG': seg_masker(),
-        'SEGHASH': seghash_masker(),
+        'SEG': SegMasker(),
+        'SEGHASH': SegHashMasker(),
     }
 
     if method not in masker_dict:
         raise RuntimeError('脱敏策略不存在')
 
-    return masker_dict[method]
+    # 获取混淆策略
+    masker = masker_dict[method]
+
+    # 生成混淆值
+    return masker.process(origin_value)
 
 
-def get_dest_path(src):
-    """
-    获取输出文件名
-    """
-    return f'{src[0:-4]}{FILE_SUFFIX}.xls'
-
-
-def get_title_col_id(title_name, titles):
-    """
-    根据标题名获取列ID
-    """
-    for col_id, title in enumerate(titles):
-        if title_name == title:
-            return col_id
-
-
-def mask(path, rules):
+def process(path, rules):
     """
     Excel脱敏
     :param path: 原始Excel路径
     :param rules: 脱敏规则
     :return: None
     """
-    print(f'输入: {path}')
-
-    # 打开Excel文件
-    read_book = xlrd.open_workbook(path, formatting_info=True)
-    write_book = copy(read_book)
-
-    # 打开Sheet页
-    read_sheet = read_book.sheet_by_index(SHEET_IDX)
-    write_sheet = write_book.get_sheet(SHEET_IDX)
-
-    # 获取标题行
-    titles = read_sheet.row_values(TITLE_ROW)
+    # 打开Excel
+    repo = XlsRepo(path)
 
     # 遍历脱敏规则
     for title_name, method in rules.items():
-        col_id = get_title_col_id(title_name, titles)
+        col_id = repo.get_col_by_title(title_name)
         print(f'标题名: {title_name}  列: {col_id}  脱敏规则: {method}')
 
-        if not col_id:
-            raise RuntimeError('根据标题找不到对应的列ID')
-
         # 遍历Sheet页
-        nrows = read_sheet.nrows
-        for row_id in range(nrows):
-            # 标题及之上的行不处理
-            if row_id <= TITLE_ROW:
-                continue
-
-            # 读取行
-            row = read_sheet.row_values(row_id)
-
+        for row_id in range(repo.title_row_id + 1, repo.row_count):
             # 读取原始值
-            src_value = row[col_id]
-            if src_value:
-                # 获取混淆策略
-                masker = get_masker(method)
-
+            origin_value = repo.read_cell(row_id, col_id)
+            if origin_value:
                 # 生成混淆值
-                mask_value = masker.process(src_value)
-
+                masking_value = do_masking(method, origin_value)
                 # 写入Cell
-                write_sheet.write(row_id, col_id, mask_value)
+                repo.write_cell(row_id, col_id, masking_value)
 
     # 保存Excel
-    dest_path = get_dest_path(path)
-    write_book.save(dest_path)
-    print(f'输出: {dest_path}')
+    repo.save_by_suffix(FILE_SUFFIX)
 
 
 if __name__ == '__main__':
@@ -213,4 +173,4 @@ if __name__ == '__main__':
         '*项目名称': 'SEG',
         '*项目金额': 'MONEY',
     }
-    mask(path, rules)
+    process(path, rules)
