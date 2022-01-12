@@ -1,5 +1,4 @@
-# 全局默认配置
-from processor_common import TimeFormatProcessor, FillBlankProcessor, FillAllProcessor, DictProcessor
+from processor_common import TimeFormatProcessor, FillBlankProcessor, FillAllProcessor, DictProcessor, UuidProcessor
 from processor_masking import PhoneMaskingProcessor, NameMaskingProcessor, HashMaskingProcessor, SegMaskingProcessor, \
     SegHashMaskingProcessor, MoneyMaskingProcessor
 from processor_similarity import SimilarityProcessor
@@ -20,5 +19,6 @@ PROCESSORS = {
     'SIMILARITY': SimilarityProcessor,  # 相似推荐
     'FILL_BLANK': FillBlankProcessor,  # 空白填充
     'FILL_ALL': FillAllProcessor,  # 全量填充
-    'REPLACE_DICT': DictProcessor,  # 字典替换
+    'DICT': DictProcessor,  # 字典替换
+    'UUID': UuidProcessor,  # UUID填充
 }

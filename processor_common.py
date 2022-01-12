@@ -1,3 +1,5 @@
+import uuid
+
 from processor import Processor
 
 
@@ -49,3 +51,15 @@ class DictProcessor(Processor):
         else:
             if 'default' in self.dict:
                 return self.dict['default']
+
+
+class UuidProcessor(Processor):
+    """
+    UUID填充
+    """
+
+    def __init__(self, *args):
+        self.length = args[0]
+
+    def process(self, origin):
+        return str(uuid.uuid4()).replace('-', '')[0:self.length]

@@ -1,2 +1,4 @@
-for i in range(1, 5):
-    print(i)
+import uuid
+
+uuid = str(uuid.uuid4()).replace('-', '')[0:24]
+print(uuid)
