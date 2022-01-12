@@ -57,11 +57,22 @@ class TestTasks(unittest.TestCase):
 
     def test_mask_2(self):
         """
-        项目导入
+        项目
         """
         path = '/Users/bluexiii/Downloads/export/项目导入20220110103906.xls'
         rules = {
             '*项目名称': 'HASH',
             '*项目金额': 'MONEY',
+        }
+        mask(path, rules)
+
+    def test_mask_3(self):
+        """
+        供应商
+        """
+        path = '/Users/bluexiii/Downloads/export/供应商new.xls'
+        rules = {
+            '*供应商名称': 'HASH',
+            '*供应商简称': 'HASH',
         }
         mask(path, rules)
