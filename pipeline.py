@@ -24,7 +24,7 @@ class Pipeline(object):
 
     def process(self):
         # 遍历规则
-        for index, (col_name, target_col_name, method, *args) in enumerate(rules):
+        for index, (col_name, target_col_name, method, *args) in enumerate(self.rules):
             # 获取原始列ID及目标列ID
             origin_col_id = self.repo.get_col_by_title(col_name)
             target_col_id = self.repo.get_col_by_title(target_col_name) if target_col_name else origin_col_id
@@ -48,7 +48,8 @@ class Pipeline(object):
                     masking_value = processor.process(origin_value)
 
                 # 写入单元格
-                self.repo.write_cell(row_id, target_col_id, masking_value)
+                if masking_value:
+                    self.repo.write_cell(row_id, target_col_id, masking_value)
 
         # 保存Excel
         self.repo.save()

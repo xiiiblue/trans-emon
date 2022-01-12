@@ -2,9 +2,6 @@ import jieba
 from processor import Processor
 
 
-# from settings import THRESHOLD
-
-
 class SimilarityProcessor(Processor):
     """
     相似度推荐

@@ -41,39 +41,3 @@ class TestProcessor(unittest.TestCase):
         src_value = '053112341234'
         mask_value = masker.process(src_value)
         print(mask_value)
-
-    def test_masking_1(self):
-        """
-        客户管理
-        """
-        path = '/Users/bluexiii/Downloads/export/客户管理20220110103625.xls'
-        rules = {
-            '*客户名称': 'HASH',
-            '*客户简称': 'HASH',
-            '联系人': 'NAME',
-            '电话': 'PHONE',
-            '地址': 'HASH',
-        }
-        process(path, rules)
-
-    def test_masking_2(self):
-        """
-        项目
-        """
-        path = '/Users/bluexiii/Downloads/export/项目导入20220110103906.xls'
-        rules = {
-            '*项目名称': 'HASH',
-            '*项目金额': 'MONEY',
-        }
-        process(path, rules)
-
-    def test_masking_3(self):
-        """
-        供应商
-        """
-        path = '/Users/bluexiii/Downloads/export/供应商new.xls'
-        rules = {
-            '*供应商名称': 'HASH',
-            '*供应商简称': 'HASH',
-        }
-        process(path, rules)

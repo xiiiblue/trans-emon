@@ -7,8 +7,8 @@ class Processor(object):
     Excel处理策略
     """
 
-    def __init__(self, args):
-        self.args = args
+    def __init__(self, *args):
+        pass
 
     def process(self, origin):
         raise NotImplementedError

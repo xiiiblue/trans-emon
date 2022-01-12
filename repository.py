@@ -1,6 +1,7 @@
 from xlutils.copy import copy
 import xlrd
-from settings import *
+
+from settings import SHEET_IDX, TITLE_ROW, FILE_SUFFIX
 
 
 class Repository(object):

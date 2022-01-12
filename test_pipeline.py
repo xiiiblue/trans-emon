@@ -11,11 +11,11 @@ class TestPipeline(unittest.TestCase):
         """
         path = '/Users/bluexiii/Downloads/export/客户管理20220110103625.xls'
         rules = [
-            ('*客户名称', 'HASH', None),
-            ('*客户简称', 'HASH', None),
-            ('联系人', 'NAME', None),
-            ('电话', 'PHONE', None),
-            ('地址', 'HASH', None),
+            ('*客户名称', None, 'MASK_HASH', None),
+            ('*客户简称', None, 'MASK_HASH', None),
+            ('联系人', None, 'MASK_NAME', None),
+            ('电话', None, 'MASK_PHONE', None),
+            ('地址', None, 'MASK_HASH', None),
         ]
         pipeline = Pipeline(path, rules)
         pipeline.process()
@@ -26,9 +26,13 @@ class TestPipeline(unittest.TestCase):
         """
         path = '/Users/bluexiii/Downloads/export/项目导入20220110103906.xls'
         rules = [
-            ('*项目名称', 'SEG', None),
-            ('*项目金额', 'MONEY', None),
-            ('*立项时间', 'TIME', None),
+            ('*项目名称', None, 'MASK_SEG', None),
+            ('*项目金额', None, 'MASK_MONEY', None),
+            ('*立项时间', None, 'FORMAT_TIME', None),
+            ('*计划结项日期', None, 'FORMAT_TIME', None),
+            ('*计划结项日期', None, 'FILL_BLANK', '2099-12-31'),
+            ('*计划验收时间', None, 'FILL_ALL', '2000-01-01'),
+            ('*项目类型', None, 'REPLACE_DICT', {'软件开发': '系统内', 'default': '系统外'}),
         ]
         pipeline = Pipeline(path, rules)
         pipeline.process()
@@ -40,8 +44,8 @@ class TestPipeline(unittest.TestCase):
         path = '/Users/bluexiii/Downloads/export/供应商new.xls'
 
         rules = [
-            ('*供应商名称', 'HASH', None),
-            ('*供应商简称', 'HASH', None),
+            ('*供应商名称', None, 'MASK_HASH', None),
+            ('*供应商简称', None, 'MASK_HASH', None),
         ]
         pipeline = Pipeline(path, rules)
         pipeline.process()
