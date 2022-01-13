@@ -97,6 +97,7 @@ class TestPipeline(unittest.TestCase):
             ('*合同结束日期', None, 'FILL_BLANK', '2050-12-31'),
             ('日期比较', '日期比较', 'MARK_DATE_COMPARE', '*合同开始日期', '*合同结束日期'),
             ('*合同结束日期', '异常清单', 'MARK_CHECK_LIST', CHECK_LIST),
+            ('*收入合同编号', '重复次数', 'MARK_DUPLICATE',),
         ]
         pipeline = ExcelPipeline(path, rules)
         pipeline.process()
