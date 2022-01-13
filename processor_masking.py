@@ -1,7 +1,8 @@
-import hashlib
 import random
 import re
 import jieba
+
+import utils
 from processor import Processor
 
 
@@ -44,7 +45,7 @@ class HashMaskingProcessor(Processor):
     def process(self, origin):
         if len(origin) > 4:
             pat = re.compile(r'(\w{2})(.+)(\w{2})')
-            hash = get_hash(origin)
+            hash = utils.md5_hash(origin)
             return pat.sub(r'\1**\3', origin) + hash
         else:
             return origin
@@ -56,17 +57,17 @@ class SegMaskingProcessor(Processor):
     """
 
     def process(self, origin):
-        seg_list = jieba.lcut(origin)
+        seg_list = utils.word_segment(origin)
         seg_len = len(seg_list)
 
-        if seg_len < 10:
+        if seg_len < 3:
+            plain_positions = [0]
+        elif seg_len < 6:
             plain_positions = [0, seg_len - 1]
-        elif seg_len < 20:
+        elif seg_len < 9:
             plain_positions = [0, int(seg_len / 2), seg_len - 1]
-        elif seg_len < 30:
-            plain_positions = [0, int(seg_len / 3), int(seg_len * 2 / 3), seg_len - 1]
         else:
-            plain_positions = [0, int(seg_len / 4), int(seg_len * 2 / 4), int(seg_len * 3 / 4), seg_len - 1]
+            plain_positions = [0, int(seg_len / 3), int(seg_len * 2 / 3), seg_len - 1]
 
         mask_value = ''
         for idx, word in enumerate(seg_list):
@@ -77,21 +78,12 @@ class SegMaskingProcessor(Processor):
         return mask_value
 
 
-class SegHashMaskingProcessor(Processor):
+class SegHashMaskingProcessor(SegMaskingProcessor):
     """
     分词加哈希脱敏策略
     """
 
     def process(self, origin):
         seg_value = super().process(origin)
-        hash_value = get_hash(origin)
+        hash_value = utils.md5_hash(origin, 8)
         return seg_value + hash_value
-
-
-def get_hash(origin):
-    """
-    获取16位哈希值
-    """
-    md5 = hashlib.md5()
-    md5.update(origin.encode('utf-8'))
-    return md5.hexdigest()[8:-8]

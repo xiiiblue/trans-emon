@@ -53,9 +53,9 @@ class DictProcessor(Processor):
                 return self.dict['default']
 
 
-class UuidProcessor(Processor):
+class UuidGenerateProcessor(Processor):
     """
-    UUID填充
+    UUID生成
     """
 
     def __init__(self, *args):
@@ -63,3 +63,15 @@ class UuidProcessor(Processor):
 
     def process(self, origin):
         return str(uuid.uuid4()).replace('-', '')[0:self.length]
+
+
+class UuidStripProcessor(Processor):
+    """
+    UUID截取
+    """
+
+    def __init__(self, *args):
+        self.length = args[0]
+
+    def process(self, origin):
+        return origin.replace('-', '')[0:self.length]

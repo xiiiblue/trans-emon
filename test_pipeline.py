@@ -11,11 +11,12 @@ class TestPipeline(unittest.TestCase):
         """
         path = '/Users/bluexiii/Downloads/export/客户管理20220110103625.xls'
         rules = [
-            ('*客户名称', None, 'MASK_HASH', None),
-            ('*客户简称', None, 'MASK_HASH', None),
+            ('*客户编号', None, 'UUID_STRIP', None),
+            ('*客户名称', None, 'MASK_SEG_HASH', None),
+            ('*客户简称', None, 'MASK_SEG_HASH', None),
             ('联系人', None, 'MASK_NAME', None),
             ('电话', None, 'MASK_PHONE', None),
-            ('地址', None, 'MASK_HASH', None),
+            ('地址', None, 'MASK_SEG', None),
         ]
         pipeline = Pipeline(path, rules)
         pipeline.process()

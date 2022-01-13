@@ -1,11 +1,17 @@
-from processor_common import TimeFormatProcessor, FillBlankProcessor, FillAllProcessor, DictProcessor, UuidProcessor
+from processor_common import TimeFormatProcessor, FillBlankProcessor, FillAllProcessor, DictProcessor, UuidGenerateProcessor, \
+    UuidStripProcessor
 from processor_masking import PhoneMaskingProcessor, NameMaskingProcessor, HashMaskingProcessor, SegMaskingProcessor, \
     SegHashMaskingProcessor, MoneyMaskingProcessor
 from processor_similarity import SimilarityProcessor
 
-TITLE_ROW = 1  # 标题行号
-SHEET_IDX = 0  # 有效SHEET页
-FILE_SUFFIX = '(已加工)'  # 输出文件后缀
+# 标题行号
+TITLE_ROW = 1
+
+# 有效SHEET页
+SHEET_IDX = 0
+
+# 输出文件后缀
+FILE_SUFFIX = '(已加工)'
 
 # 数据处理器
 PROCESSORS = {
@@ -20,5 +26,15 @@ PROCESSORS = {
     'FILL_BLANK': FillBlankProcessor,  # 空白填充
     'FILL_ALL': FillAllProcessor,  # 全量填充
     'DICT': DictProcessor,  # 字典替换
-    'UUID': UuidProcessor,  # UUID填充
+    'UUID_GENERATE': UuidGenerateProcessor,  # UUID生成
+    'UUID_STRIP': UuidStripProcessor,  # UUID截取
+}
+
+# 客户字典
+CUST_DICT = {
+    '普通客户': '系统内',
+    '潜力客户': '系统内',
+    '亲密客户': '系统内',
+    'TOP客户': '系统内',
+    'default': '系统外',
 }

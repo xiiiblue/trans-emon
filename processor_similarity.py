@@ -1,4 +1,4 @@
-import jieba
+import utils
 from processor import Processor
 
 
@@ -26,12 +26,7 @@ class SimilarityProcessor(Processor):
             cell_value = repo.read_cell(row_id, origin_col_id)
 
             # 分词
-            seg_list = jieba.lcut(cell_value.strip())
-
-            # 剔除特殊字符
-            for seg in seg_list:
-                if self.is_symbol(seg):
-                    seg_list.remove(seg)
+            seg_list = utils.word_segment(cell_value)
 
             # 加入分词字典
             sentence_dict[row_id] = (cell_value, seg_list)
@@ -47,25 +42,6 @@ class SimilarityProcessor(Processor):
         if row_id in self.similarity_dict:
             return self.similarity_dict[row_id]
 
-    def is_symbol(self, char):
-        """
-        判断是否为特殊字符
-        """
-        symbols = "~!@#$%^&*()_+-*/<>,.[]\/（）【】，。《》"
-        for symbol in symbols:
-            if char == symbol:
-                return True
-        return False
-
-    def oc_similarity(self, list_a, list_b):
-        """
-        判断相似度(Overlap Coefficient算法)
-        """
-        set_a = set(list_a)
-        set_b = set(list_b)
-        set_c = set_a.intersection(set_b)
-        return float(len(set_c)) / float(min(len(set_a), len(set_b)))
-
     def do_similarity(self, sentence_dict):
         """
         比较相似度
@@ -80,7 +56,7 @@ class SimilarityProcessor(Processor):
                 if src_row_id == dest_row_id:
                     continue
 
-                ratio = self.oc_similarity(src_seg_list, dest_seg_list)
+                ratio = utils.oc_similarity(src_seg_list, dest_seg_list)
                 if ratio > self.threshold:
                     similarity_list.append((ratio, dest_row_id, dest_sentenct))
 
