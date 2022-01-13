@@ -1,5 +1,3 @@
-import uuid
-
 from cleaner import Cleaner
 
 """
@@ -57,21 +55,9 @@ class DictReplaceCleaner(Cleaner):
                 return self.dict['default']
 
 
-class UuidGenerateCleaner(Cleaner):
+class StripUuidCleaner(Cleaner):
     """
-    UUID生成
-    """
-
-    def __init__(self, *args):
-        self.length = args[0]
-
-    def clean(self, origin):
-        return str(uuid.uuid4()).replace('-', '')[0:self.length]
-
-
-class UuidStripCleaner(Cleaner):
-    """
-    UUID截取
+    截取UUID
     """
 
     def __init__(self, *args):
@@ -79,3 +65,15 @@ class UuidStripCleaner(Cleaner):
 
     def clean(self, origin):
         return origin.replace('-', '')[0:self.length]
+
+
+class StripStringCleaner(Cleaner):
+    """
+    截取普通字符串
+    """
+
+    def __init__(self, *args):
+        self.length = args[0]
+
+    def clean(self, origin):
+        return origin[0:self.length]

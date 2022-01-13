@@ -1,6 +1,9 @@
-from cleaner.common import TimeFormatCleaner, FillBlankCleaner, FillAllCleaner, DictReplaceCleaner, UuidGenerateCleaner, UuidStripCleaner
+from cleaner.common import TimeFormatCleaner, FillBlankCleaner, FillAllCleaner, DictReplaceCleaner, StripUuidCleaner, StripStringCleaner
+from cleaner.generater import GenerateUuidCleaner, GenerateRandomNumberCleaner, GenerateSequenceCleaner
 from cleaner.masking import NameMaskingCleaner, HashMaskingCleaner, SegMaskingCleaner, SegHashMaskingCleaner, MoneyMaskingCleaner, \
     PhoneMaskingCleaner
+from cleaner.mock import MockAddressCleaner, MockCityCleaner, MockZipCodeCleaner, MockNameCleaner, MockCompanyCleaner, MockPhoneCleaner, \
+    MockSentenceCleaner
 from cleaner.similarity import SimilarityCleaner
 
 TITLE_ROW = 1
@@ -23,9 +26,20 @@ CLEANER = {
     'SIMILARITY': (SimilarityCleaner, '相似推荐'),
     'FILL_BLANK': (FillBlankCleaner, '空白填充'),
     'FILL_ALL': (FillAllCleaner, '全量填充'),
-    'DICT': (DictReplaceCleaner, '字典替换'),
-    'UUID_GENERATE': (UuidGenerateCleaner, 'UUID生成'),
-    'UUID_STRIP': (UuidStripCleaner, 'UUID截取'),
+    'DICT_REPLACE': (DictReplaceCleaner, '字典替换'),
+    'GEN_UUID': (GenerateUuidCleaner, '生成UUID'),
+    'GEN_NUM': (GenerateRandomNumberCleaner, '生成随机数'),
+    'GEN_SEQUENCE': (GenerateSequenceCleaner, '生成自增序列'),
+    'STRIP_UUID': (StripUuidCleaner, '截取UUID'),
+    'STRIP_STR': (StripStringCleaner, '截取字符串'),
+    'MOCK_ADDR': (MockAddressCleaner, '模拟姓名'),
+    'MOCK_CITY': (MockCityCleaner, '模拟城市'),
+    'MOCK_ZIPCODE': (MockZipCodeCleaner, '模拟邮编'),
+    'MOCK_NAME': (MockNameCleaner, '模拟姓名'),
+    'MOCK_COMPANY': (MockCompanyCleaner, '模拟公司名'),
+    'MOCK_PHONE': (MockPhoneCleaner, '模拟公司名'),
+    'MOCK_SENTENCE': (MockSentenceCleaner, '模拟文本'),
+    'MOCK_NUMBER': (MockSentenceCleaner, '模拟数字'),
 }
 
 # 客户字典

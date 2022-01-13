@@ -10,5 +10,5 @@ class Cleaner(object):
     def __init__(self, *args):
         pass
 
-    def clean(self, origin):
+    def clean(self, origin=None):
         raise NotImplementedError
