@@ -21,10 +21,12 @@ class Pipeline(object):
 
             # 初始化数据处理器
             cleaner = self.get_cleaner(method, *args)
+            method_name = self.get_method_name(method)
+
             if hasattr(cleaner, 'load'):
                 cleaner.load(origin_col_id, self.repository)
 
-            print(f'步骤: {index + 1}  标题: {col_name}  规则: {method}  参数: {args}')
+            print(f'步骤: {index + 1}  标题: {col_name}  规则: {method_name}  参数: {args}')
 
             # 遍历Sheet页
             for row_id in range(self.repository.title_row_id + 1, self.repository.row_count):
@@ -47,12 +49,22 @@ class Pipeline(object):
     @staticmethod
     def get_cleaner(method, *args):
         """
-        获取数据处理器实例
+        获取清洗器实例
         """
         if method not in CLEANER:
-            raise RuntimeError('数据处理器不存在')
+            raise RuntimeError('数据清洗器不存在')
 
-        return CLEANER[method](*args)
+        return CLEANER[method][0](*args)
+
+    @staticmethod
+    def get_method_name(method):
+        """
+        获取清洗规则名称
+        """
+        if method not in CLEANER:
+            raise RuntimeError('数据清洗器不存在')
+
+        return CLEANER[method][1]
 
 
 if __name__ == '__main__':
