@@ -1,11 +1,11 @@
 from cleaner import CellCleaner
 
 """
-清单标记
+检查清单
 """
 
 
-class MarkCheckListCleaner(CellCleaner):
+class CheckListCleaner(CellCleaner):
 
     def __init__(self, *args):
         super().__init__(*args)

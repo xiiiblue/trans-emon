@@ -1,7 +1,8 @@
 from cleaner.common import TimeFormatCleaner, FillBlankCleaner, FillAllCleaner, DictReplaceCleaner, StripUuidCleaner, StripStringCleaner
 from cleaner.compare import DateCompareCleaner
+from cleaner.duplicate import DuplicateCleaner
 from cleaner.generater import GenerateUuidCleaner, GenerateRandomNumberCleaner, GenerateSequenceCleaner
-from cleaner.mark import MarkCheckListCleaner
+from cleaner.mark import CheckListCleaner
 from cleaner.masking import NameMaskingCleaner, HashMaskingCleaner, SegMaskingCleaner, SegHashMaskingCleaner, MoneyMaskingCleaner, \
     PhoneMaskingCleaner
 from cleaner.mock import MockAddressCleaner, MockCityCleaner, MockZipCodeCleaner, MockNameCleaner, MockCompanyCleaner, MockPhoneCleaner, \
@@ -43,7 +44,8 @@ CLEANER = {
     'MOCK_NUMBER': (MockSentenceCleaner, '模拟数字'),
     'MARK_SIMILARITY': (SimilarityCleaner, '标记相似推荐'),
     'MARK_DATE_COMPARE': (DateCompareCleaner, '标记日期大小'),
-    'MARK_CHECK_LIST': (MarkCheckListCleaner, '标记异常清单'),
+    'MARK_CHECK_LIST': (CheckListCleaner, '标记检查清单'),
+    'MARK_DUPLICATE': (DuplicateCleaner, '标记重复'),
 }
 
 # 客户类型字典
