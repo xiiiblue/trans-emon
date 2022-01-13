@@ -12,7 +12,7 @@ class TestPipeline(unittest.TestCase):
         """
         path = '/Users/bluexiii/Downloads/export/项目导入20220110103906.xls'
         rules = [
-            ('*项目名称', '相似项目名称', 'SIMILARITY', 0.9),
+            ('项目名称', '相似项目名称', 'SIMILARITY', 0.9),
         ]
         pipeline = Pipeline(path, rules)
         pipeline.process()

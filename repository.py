@@ -78,4 +78,8 @@ class Repository(object):
             if title_name == title:
                 return col_id
 
+        for col_id, title in enumerate(self.titles):
+            if title_name == title.replace('*', ''):
+                return col_id
+
         raise RuntimeError('根据标题找不到对应的列ID')

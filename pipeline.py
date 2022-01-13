@@ -14,9 +14,9 @@ class Pipeline(object):
 
     def process(self):
         # 遍历规则
-        for index, (col_name, target_col_name, method, *args) in enumerate(self.rules):
+        for index, (origin_col_name, target_col_name, method, *args) in enumerate(self.rules):
             # 获取原始列ID及目标列ID
-            origin_col_id = self.repository.get_col_by_title(col_name)
+            origin_col_id = self.repository.get_col_by_title(origin_col_name)
             target_col_id = self.repository.get_col_by_title(target_col_name) if target_col_name else origin_col_id
 
             # 初始化数据处理器
@@ -26,16 +26,16 @@ class Pipeline(object):
             if hasattr(cleaner, 'load'):
                 cleaner.load(origin_col_id, self.repository)
 
-            print(f'步骤: {index + 1}  标题: {col_name}  规则: {method_name}  参数: {args}')
+            print(f'步骤: {index + 1}  标题: {origin_col_name}  规则: {method_name}  参数: {args}')
 
             # 遍历Sheet页
             for row_id in range(self.repository.title_row_id + 1, self.repository.row_count):
 
                 if hasattr(cleaner, 'clean_by_id'):
-                    # 根据行ID加工数据
+                    # 根据行ID清洗数据
                     masking_value = cleaner.clean_by_id(row_id)
                 else:
-                    # 根据原始值加工数据
+                    # 根据原始值清洗数据
                     origin_value = self.repository.read_cell(row_id, origin_col_id)
                     masking_value = cleaner.clean(origin_value)
 

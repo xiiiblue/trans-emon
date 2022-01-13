@@ -1,4 +1,7 @@
-import uuid
+s = 'abcde'
+for c in s:
+    print(c)
+    if c == 'b':
+        s=s.replace('b','')
 
-uuid = str(uuid.uuid4()).replace('-', '')[0:24]
-print(uuid)
+print(s)
