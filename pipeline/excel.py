@@ -1,16 +1,16 @@
-from repository import Repository
-from settings import CLEANER
+from pipeline import Pipeline
+from repository.excel import ExcelRepository
 
 """
 Excel处理流水线
 """
 
 
-class Pipeline(object):
+class ExcelPipeline(Pipeline):
     def __init__(self, path, rules):
         self.path = path
         self.rules = rules
-        self.repository = Repository(path)
+        self.repository = ExcelRepository(path)
 
     def process(self):
         # 遍历规则
@@ -46,34 +46,11 @@ class Pipeline(object):
         # 保存Excel
         self.repository.save()
 
-    @staticmethod
-    def get_cleaner(method, *args):
-        """
-        获取清洗器实例
-        """
-        if method not in CLEANER:
-            raise RuntimeError('数据清洗器不存在')
-
-        return CLEANER[method][0](*args)
-
-    @staticmethod
-    def get_method_name(method):
-        """
-        获取清洗规则名称
-        """
-        if method not in CLEANER:
-            raise RuntimeError('数据清洗器不存在')
-
-        return CLEANER[method][1]
-
 
 if __name__ == '__main__':
     path = '/Users/bluexiii/Downloads/export/项目导入20220110103906.xls'
     rules = [
-        # ('*项目名称', None, 'SEG', None,(None)),
-        ('*项目金额', None, 'MONEY', None),
-        ('*立项时间', None, 'TIME', None),
-        ('*项目名称', '相似项目名称', 'SIMILARITY', 0.9),
+        ('*项目名称', None, 'MASK_SEG_HASH', None),
     ]
-    pipeline = Pipeline(path, rules)
+    pipeline = ExcelPipeline(path, rules)
     pipeline.process()

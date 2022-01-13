@@ -1,6 +1,6 @@
 import unittest
 
-from cleaner.common import UuidStripCleaner
+from cleaner.common import StripUuidCleaner
 from cleaner.masking import SegMaskingCleaner, SegHashMaskingCleaner, HashMaskingCleaner, MoneyMaskingCleaner, \
     NameMaskingCleaner, PhoneMaskingCleaner
 from cleaner.mock import MockNameCleaner
@@ -45,7 +45,7 @@ class TestCleaner(unittest.TestCase):
         print(mask_value)
 
     def test_uuid_strip(self):
-        masker = UuidStripCleaner(24)
+        masker = StripUuidCleaner(24)
         src_value = '70589931-1F76-4A82-91EA-07976825A349'
         mask_value = masker.process(src_value)
         print(mask_value)

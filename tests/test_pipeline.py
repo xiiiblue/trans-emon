@@ -1,6 +1,5 @@
 import unittest
-
-from pipeline import Pipeline
+from pipeline.excel import ExcelPipeline
 from settings import CUST_DICT
 
 
@@ -8,13 +7,13 @@ class TestPipeline(unittest.TestCase):
 
     def test_pipeline_0(self):
         """
-        客户管理
+        相似度推荐
         """
         path = '/Users/bluexiii/Downloads/export/项目导入20220110103906.xls'
         rules = [
             ('项目名称', '相似项目名称', 'SIMILARITY', 0.9),
         ]
-        pipeline = Pipeline(path, rules)
+        pipeline = ExcelPipeline(path, rules)
         pipeline.process()
 
     def test_pipeline_1(self):
@@ -32,7 +31,7 @@ class TestPipeline(unittest.TestCase):
             ('地址', None, 'MASK_SEG', None),
             ('法定代表人', None, 'MOCK_NAME', None),
         ]
-        pipeline = Pipeline(path, rules)
+        pipeline = ExcelPipeline(path, rules)
         pipeline.process()
 
     def test_pipeline_2(self):
@@ -50,7 +49,7 @@ class TestPipeline(unittest.TestCase):
             ('*项目类型', None, 'DICT_REPLACE', {'软件开发': '系统内', 'default': '系统外'}),
             ('*项目编号', None, 'GEN_UUID', 24),
         ]
-        pipeline = Pipeline(path, rules)
+        pipeline = ExcelPipeline(path, rules)
         pipeline.process()
 
     def test_pipeline_3(self):
@@ -63,5 +62,5 @@ class TestPipeline(unittest.TestCase):
             ('*供应商名称', None, 'MASK_HASH', None),
             ('*供应商简称', None, 'MASK_HASH', None),
         ]
-        pipeline = Pipeline(path, rules)
+        pipeline = ExcelPipeline(path, rules)
         pipeline.process()
