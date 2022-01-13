@@ -44,7 +44,7 @@ class HashMaskingCleaner(Cleaner):
     哈希脱敏(相同的值可对应)
     """
 
-    def clean(self, origin):
+    def clean(self, origin=None):
         if len(origin) > 4:
             pat = re.compile(r'(\w{2})(.+)(\w{2})')
             hash = utils.md5_hash(origin)

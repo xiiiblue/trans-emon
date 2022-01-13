@@ -7,17 +7,16 @@ from cleaner import Cleaner
 数据模拟
 """
 
+faker = Faker("zh_CN")
+
 
 class MockAddressCleaner(Cleaner):
     """
     模拟姓名
     """
 
-    def __init__(self, *args):
-        self.faker = Faker("zh_CN")
-
     def clean(self, origin=None):
-        return self.faker.address()
+        return faker.address()
 
 
 class MockCityCleaner(Cleaner):
@@ -25,11 +24,8 @@ class MockCityCleaner(Cleaner):
     模拟城市
     """
 
-    def __init__(self, *args):
-        self.faker = Faker("zh_CN")
-
     def clean(self, origin=None):
-        return self.faker.city()
+        return faker.city()
 
 
 class MockZipCodeCleaner(Cleaner):
@@ -37,11 +33,8 @@ class MockZipCodeCleaner(Cleaner):
     模拟邮编
     """
 
-    def __init__(self, *args):
-        self.faker = Faker("zh_CN")
-
     def clean(self, origin=None):
-        return self.faker.postcode()
+        return faker.postcode()
 
 
 class MockNameCleaner(Cleaner):
@@ -49,11 +42,8 @@ class MockNameCleaner(Cleaner):
     模拟姓名
     """
 
-    def __init__(self, *args):
-        self.faker = Faker("zh_CN")
-
     def clean(self, origin=None):
-        return self.faker.name()
+        return faker.name()
 
 
 class MockCompanyCleaner(Cleaner):
@@ -61,11 +51,8 @@ class MockCompanyCleaner(Cleaner):
     模拟公司名
     """
 
-    def __init__(self, *args):
-        self.faker = Faker("zh_CN")
-
     def clean(self, origin=None):
-        return self.faker.company()
+        return faker.company()
 
 
 class MockPhoneCleaner(Cleaner):
@@ -73,11 +60,8 @@ class MockPhoneCleaner(Cleaner):
     模拟电话号码
     """
 
-    def __init__(self, *args):
-        self.faker = Faker("zh_CN")
-
     def clean(self, origin=None):
-        return self.faker.phone_number()
+        return faker.phone_number()
 
 
 class MockIdCardCleaner(Cleaner):
@@ -85,11 +69,8 @@ class MockIdCardCleaner(Cleaner):
     模拟身份证
     """
 
-    def __init__(self, *args):
-        self.faker = Faker("zh_CN")
-
     def clean(self, origin=None):
-        return self.faker.ssn()
+        return faker.ssn()
 
 
 class MockSentenceCleaner(Cleaner):
@@ -97,11 +78,8 @@ class MockSentenceCleaner(Cleaner):
     模拟文本
     """
 
-    def __init__(self, *args):
-        self.faker = Faker("zh_CN")
-
     def clean(self, origin=None):
-        return self.faker.paragraph(nb_sentences=3, variable_nb_sentences=True)
+        return faker.paragraph(nb_sentences=3, variable_nb_sentences=True)
 
 
 class MockNumberCleaner(Cleaner):
@@ -110,6 +88,7 @@ class MockNumberCleaner(Cleaner):
     """
 
     def __init__(self, *args):
+        super().__init__(*args)
         if args and len(args) == 2:
             if isinstance(args[0], int) and isinstance(args[0], int):
                 self.min = args[0]

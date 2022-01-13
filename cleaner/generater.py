@@ -1,10 +1,10 @@
 import random
 import uuid
+from cleaner import Cleaner
 
 """
 数据生成
 """
-from cleaner import Cleaner
 
 
 class GenerateUuidCleaner(Cleaner):
@@ -13,9 +13,15 @@ class GenerateUuidCleaner(Cleaner):
     """
 
     def __init__(self, *args):
-        self.length = args[0]
+        super().__init__(*args)
+        if args and len(args) > 0:
+            if not isinstance(args[0], int):
+                raise RuntimeError('UUID长度参数必须是数字')
+            self.length = args[0]
+        else:
+            self.length = 16
 
-    def clean(self, origin):
+    def clean(self, origin=None):
         return str(uuid.uuid4()).replace('-', '')[0:self.length]
 
 
@@ -25,9 +31,15 @@ class GenerateRandomNumberCleaner(Cleaner):
     """
 
     def __init__(self, *args):
-        self.length = args[0]
+        super().__init__(*args)
+        if args and len(args) > 0:
+            if not isinstance(args[0], int):
+                raise RuntimeError('随机数长度参数必须是数字')
+            self.length = args[0]
+        else:
+            self.length = 16
 
-    def clean(self, origin):
+    def clean(self, origin=None):
         random_string = ""
         for i in range(self.length):
             random_string += chr(random.randrange(ord('0'), ord('9') + 1))
@@ -40,7 +52,8 @@ class GenerateSequenceCleaner(Cleaner):
     """
 
     def __init__(self, *args):
-        if args[0]:
+        super().__init__(*args)
+        if args and len(args) > 0:
             if not isinstance(args[0], int):
                 raise RuntimeError('自增序列参数必须是数字')
             self.start_with = args[0]
@@ -49,6 +62,6 @@ class GenerateSequenceCleaner(Cleaner):
 
         self.sequence = self.start_with - 1
 
-    def clean(self, origin):
+    def clean(self, origin=None):
         self.sequence += 1
         return self.sequence

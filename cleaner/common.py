@@ -10,7 +10,7 @@ class TimeFormatCleaner(Cleaner):
     时间格式化
     """
 
-    def clean(self, origin):
+    def clean(self, origin=None):
         return origin[0:10]
 
 
@@ -20,9 +20,13 @@ class FillBlankCleaner(Cleaner):
     """
 
     def __init__(self, *args):
-        self.fill_data = args[0]
+        super().__init__(*args)
+        if args and len(args) > 0:
+            self.fill_data = args[0]
+        else:
+            self.fill_data = '***'
 
-    def clean(self, origin):
+    def clean(self, origin=None):
         if not origin:
             return self.fill_data
 
@@ -33,9 +37,13 @@ class FillAllCleaner(Cleaner):
     """
 
     def __init__(self, *args):
-        self.fill_data = args[0]
+        super().__init__(*args)
+        if args and len(args) > 0:
+            self.fill_data = args[0]
+        else:
+            self.fill_data = '***'
 
-    def clean(self, origin):
+    def clean(self, origin=None):
         return self.fill_data
 
 
@@ -45,9 +53,13 @@ class DictReplaceCleaner(Cleaner):
     """
 
     def __init__(self, *args):
-        self.dict = args[0]
+        super().__init__(*args)
+        if args and len(args) > 0:
+            self.dict = args[0]
+        else:
+            raise RuntimeError('字典替换参数未传入')
 
-    def clean(self, origin):
+    def clean(self, origin=None):
         if origin in self.dict:
             return self.dict[origin]
         else:
@@ -61,9 +73,13 @@ class StripUuidCleaner(Cleaner):
     """
 
     def __init__(self, *args):
-        self.length = args[0]
+        super().__init__(*args)
+        if args and len(args) > 0:
+            self.length = args[0]
+        else:
+            self.length = 16
 
-    def clean(self, origin):
+    def clean(self, origin=None):
         return origin.replace('-', '')[0:self.length]
 
 
@@ -73,7 +89,11 @@ class StripStringCleaner(Cleaner):
     """
 
     def __init__(self, *args):
-        self.length = args[0]
+        super().__init__(*args)
+        if args and len(args) > 0:
+            self.length = args[0]
+        else:
+            self.length = 16
 
-    def clean(self, origin):
+    def clean(self, origin=None):
         return origin[0:self.length]

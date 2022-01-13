@@ -34,7 +34,7 @@ class SimilarityCleaner(Cleaner):
         # 比较相似度
         self.similarity_dict = self.do_similarity(sentence_dict)
 
-    def clean(self, origin):
+    def clean(self, origin=None):
         pass
 
     def clean_by_id(self, row_id):
