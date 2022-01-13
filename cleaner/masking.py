@@ -1,14 +1,14 @@
 import random
 import re
 import utils
-from cleaner import Cleaner
+from cleaner import CellCleaner
 
 """
 数据脱敏
 """
 
 
-class PhoneMaskingCleaner(Cleaner):
+class PhoneMaskingCleaner(CellCleaner):
     """
     电话脱敏
     """
@@ -20,7 +20,7 @@ class PhoneMaskingCleaner(Cleaner):
             return origin
 
 
-class NameMaskingCleaner(Cleaner):
+class NameMaskingCleaner(CellCleaner):
     """
     人名脱敏
     """
@@ -30,7 +30,7 @@ class NameMaskingCleaner(Cleaner):
         return pat.sub(r'\1**', origin)
 
 
-class MoneyMaskingCleaner(Cleaner):
+class MoneyMaskingCleaner(CellCleaner):
     """
     金额脱敏
     """
@@ -39,7 +39,7 @@ class MoneyMaskingCleaner(Cleaner):
         return random.randint(0, 99999)
 
 
-class HashMaskingCleaner(Cleaner):
+class HashMaskingCleaner(CellCleaner):
     """
     哈希脱敏(相同的值可对应)
     """
@@ -53,7 +53,7 @@ class HashMaskingCleaner(Cleaner):
             return origin
 
 
-class SegMaskingCleaner(Cleaner):
+class SegMaskingCleaner(CellCleaner):
     """
     分词脱敏(增强可读性)
     """

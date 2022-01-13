@@ -1,11 +1,11 @@
-from cleaner import Cleaner
+from cleaner import CellCleaner
 
 """
 通用清洗
 """
 
 
-class TimeFormatCleaner(Cleaner):
+class TimeFormatCleaner(CellCleaner):
     """
     时间格式化
     """
@@ -14,7 +14,7 @@ class TimeFormatCleaner(Cleaner):
         return origin[0:10]
 
 
-class FillBlankCleaner(Cleaner):
+class FillBlankCleaner(CellCleaner):
     """
     空白填充
     """
@@ -31,7 +31,7 @@ class FillBlankCleaner(Cleaner):
             return self.fill_data
 
 
-class FillAllCleaner(Cleaner):
+class FillAllCleaner(CellCleaner):
     """
     全量填充
     """
@@ -47,7 +47,7 @@ class FillAllCleaner(Cleaner):
         return self.fill_data
 
 
-class DictReplaceCleaner(Cleaner):
+class DictReplaceCleaner(CellCleaner):
     """
     字典替换
     """
@@ -67,7 +67,7 @@ class DictReplaceCleaner(Cleaner):
                 return self.dict['default']
 
 
-class StripUuidCleaner(Cleaner):
+class StripUuidCleaner(CellCleaner):
     """
     截取UUID
     """
@@ -83,7 +83,7 @@ class StripUuidCleaner(Cleaner):
         return origin.replace('-', '')[0:self.length]
 
 
-class StripStringCleaner(Cleaner):
+class StripStringCleaner(CellCleaner):
     """
     截取普通字符串
     """

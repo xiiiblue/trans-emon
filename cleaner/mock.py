@@ -1,7 +1,7 @@
 import random
 
 from faker import Faker
-from cleaner import Cleaner
+from cleaner import CellCleaner
 
 """
 数据模拟
@@ -10,7 +10,7 @@ from cleaner import Cleaner
 faker = Faker("zh_CN")
 
 
-class MockAddressCleaner(Cleaner):
+class MockAddressCleaner(CellCleaner):
     """
     模拟姓名
     """
@@ -19,7 +19,7 @@ class MockAddressCleaner(Cleaner):
         return faker.address()
 
 
-class MockCityCleaner(Cleaner):
+class MockCityCleaner(CellCleaner):
     """
     模拟城市
     """
@@ -28,7 +28,7 @@ class MockCityCleaner(Cleaner):
         return faker.city()
 
 
-class MockZipCodeCleaner(Cleaner):
+class MockZipCodeCleaner(CellCleaner):
     """
     模拟邮编
     """
@@ -37,7 +37,7 @@ class MockZipCodeCleaner(Cleaner):
         return faker.postcode()
 
 
-class MockNameCleaner(Cleaner):
+class MockNameCleaner(CellCleaner):
     """
     模拟姓名
     """
@@ -46,7 +46,7 @@ class MockNameCleaner(Cleaner):
         return faker.name()
 
 
-class MockCompanyCleaner(Cleaner):
+class MockCompanyCleaner(CellCleaner):
     """
     模拟公司名
     """
@@ -55,7 +55,7 @@ class MockCompanyCleaner(Cleaner):
         return faker.company()
 
 
-class MockPhoneCleaner(Cleaner):
+class MockPhoneCleaner(CellCleaner):
     """
     模拟电话号码
     """
@@ -64,7 +64,7 @@ class MockPhoneCleaner(Cleaner):
         return faker.phone_number()
 
 
-class MockIdCardCleaner(Cleaner):
+class MockIdCardCleaner(CellCleaner):
     """
     模拟身份证
     """
@@ -73,16 +73,30 @@ class MockIdCardCleaner(Cleaner):
         return faker.ssn()
 
 
-class MockSentenceCleaner(Cleaner):
+class MockSentenceCleaner(CellCleaner):
     """
     模拟文本
     """
 
+    def __init__(self, *args):
+        super().__init__(*args)
+        if args and len(args) == 2:
+            if isinstance(args[0], int) and isinstance(args[0], int):
+                self.sentence_number = args[0]
+            else:
+                raise RuntimeError('自增序列参数必须是数字')
+        else:
+            self.sentence_number = 1
+
     def clean(self, origin=None):
-        return faker.paragraph(nb_sentences=3, variable_nb_sentences=True)
+        sentences = faker.paragraph(nb_sentences=self.sentence_number, variable_nb_sentences=True)
+        if self.sentence_number == 1:
+            return sentences.replace('.', '')
+        else:
+            return sentences
 
 
-class MockNumberCleaner(Cleaner):
+class MockNumberCleaner(CellCleaner):
     """
     模拟数字
     """

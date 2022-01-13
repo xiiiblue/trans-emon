@@ -1,13 +1,13 @@
 import random
 import uuid
-from cleaner import Cleaner
+from cleaner import CellCleaner
 
 """
 数据生成
 """
 
 
-class GenerateUuidCleaner(Cleaner):
+class GenerateUuidCleaner(CellCleaner):
     """
     生成UUID
     """
@@ -25,7 +25,7 @@ class GenerateUuidCleaner(Cleaner):
         return str(uuid.uuid4()).replace('-', '')[0:self.length]
 
 
-class GenerateRandomNumberCleaner(Cleaner):
+class GenerateRandomNumberCleaner(CellCleaner):
     """
     生成随机数
     """
@@ -46,7 +46,7 @@ class GenerateRandomNumberCleaner(Cleaner):
         return random_string
 
 
-class GenerateSequenceCleaner(Cleaner):
+class GenerateSequenceCleaner(CellCleaner):
     """
     生成自增序列
     """

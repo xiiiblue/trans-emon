@@ -1,3 +1,4 @@
+from cleaner import RowCleaner
 from pipeline import Pipeline
 from repository.excel import ExcelRepository
 
@@ -23,7 +24,7 @@ class ExcelPipeline(Pipeline):
             cleaner = self.get_cleaner(method, *args)
             method_name = self.get_method_name(method)
 
-            if hasattr(cleaner, 'load'):
+            if isinstance(cleaner, RowCleaner):
                 cleaner.load(origin_col_id, self.repository)
 
             print(f'步骤: {index + 1}  标题: {origin_col_name}  规则: {method_name}  参数: {args}')
@@ -31,9 +32,9 @@ class ExcelPipeline(Pipeline):
             # 遍历Sheet页
             for row_id in range(self.repository.title_row_id + 1, self.repository.row_count):
 
-                if hasattr(cleaner, 'clean_by_id'):
+                if isinstance(cleaner, RowCleaner):
                     # 根据行ID清洗数据
-                    masking_value = cleaner.clean_by_id(row_id)
+                    masking_value = cleaner.clean(row_id)
                 else:
                     # 根据原始值清洗数据
                     origin_value = self.repository.read_cell(row_id, origin_col_id)
@@ -48,9 +49,9 @@ class ExcelPipeline(Pipeline):
 
 
 if __name__ == '__main__':
-    path = '/Users/bluexiii/Downloads/export/项目导入20220110103906.xls'
+    path = '/Users/bluexiii/Downloads/export/收入合同20220110103820.xls'
     rules = [
-        ('*项目名称', None, 'MASK_SEG_HASH', None),
+        ('日期比较', None, 'MARK_DATE_COMPARE', '*合同开始日期', '*合同结束日期'),
     ]
     pipeline = ExcelPipeline(path, rules)
     pipeline.process()

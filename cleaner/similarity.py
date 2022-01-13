@@ -1,29 +1,32 @@
 import utils
-
-from cleaner import Cleaner
+from cleaner import RowCleaner
 
 """
 相似度推荐
 """
 
 
-class SimilarityCleaner(Cleaner):
+class SimilarityCleaner(RowCleaner):
 
     def __init__(self, *args):
         super().__init__(*args)
-        self.threshold = args[0]
+        if args and len(args) > 0:
+            self.threshold = args[0]
+        else:
+            self.threshold = 0.9
+
         self.similarity_dict = {}
 
-    def load(self, origin_col_id, repo):
+    def load(self, origin_col_id, repository):
         """
         预处理
         """
 
         # 遍历Sheet页取原始列
         sentence_dict = {}  # 分词字典 行号:(原始句子,分词数组)
-        for row_id in range(repo.title_row_id + 1, repo.row_count):
+        for row_id in range(repository.title_row_id + 1, repository.row_count):
             # 读取单元格
-            cell_value = repo.read_cell(row_id, origin_col_id)
+            cell_value = repository.read_cell(row_id, origin_col_id)
 
             # 分词
             seg_list = utils.word_segment(cell_value)
@@ -34,10 +37,7 @@ class SimilarityCleaner(Cleaner):
         # 比较相似度
         self.similarity_dict = self.do_similarity(sentence_dict)
 
-    def clean(self, origin=None):
-        pass
-
-    def clean_by_id(self, row_id):
+    def clean(self, row_id=None):
         """
         相似度推荐
         """

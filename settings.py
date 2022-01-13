@@ -1,4 +1,5 @@
 from cleaner.common import TimeFormatCleaner, FillBlankCleaner, FillAllCleaner, DictReplaceCleaner, StripUuidCleaner, StripStringCleaner
+from cleaner.compare import DateCompareCleaner
 from cleaner.generater import GenerateUuidCleaner, GenerateRandomNumberCleaner, GenerateSequenceCleaner
 from cleaner.masking import NameMaskingCleaner, HashMaskingCleaner, SegMaskingCleaner, SegHashMaskingCleaner, MoneyMaskingCleaner, \
     PhoneMaskingCleaner
@@ -12,7 +13,7 @@ TITLE_ROW = 1
 SHEET_IDX = 0
 
 # 输出文件后缀
-FILE_SUFFIX = '(已加工)'
+FILE_SUFFIX = '(已清洗)'
 
 # 数据清洗器
 CLEANER = {
@@ -23,7 +24,6 @@ CLEANER = {
     'MASK_SEG': (SegMaskingCleaner, '分词脱敏'),
     'MASK_SEG_HASH': (SegHashMaskingCleaner, '分词加哈希脱敏'),
     'FORMAT_TIME': (TimeFormatCleaner, '时间格式化'),
-    'SIMILARITY': (SimilarityCleaner, '相似推荐'),
     'FILL_BLANK': (FillBlankCleaner, '空白填充'),
     'FILL_ALL': (FillAllCleaner, '全量填充'),
     'DICT_REPLACE': (DictReplaceCleaner, '字典替换'),
@@ -40,13 +40,50 @@ CLEANER = {
     'MOCK_PHONE': (MockPhoneCleaner, '模拟公司名'),
     'MOCK_SENTENCE': (MockSentenceCleaner, '模拟文本'),
     'MOCK_NUMBER': (MockSentenceCleaner, '模拟数字'),
+    'MARK_SIMILARITY': (SimilarityCleaner, '标记相似推荐'),
+    'MARK_DATE_COMPARE': (DateCompareCleaner, '标记日期大小'),
 }
 
-# 客户字典
-CUST_DICT = {
+# 客户类型字典
+CUST_TYPE = {
     '普通客户': '系统内',
     '潜力客户': '系统内',
     '亲密客户': '系统内',
     'TOP客户': '系统内',
     'default': '系统外',
+}
+
+# 项目类型字典
+PROJECT_TYPE = {
+    '软件开发': '系统内',
+    'default': '系统外'
+}
+
+# 项目来源字典
+PROJECT_SOURCE = {
+    '线索转化': '直接立项',
+    '预立项转化': '前置立项',
+    'default': '直接立项',
+}
+
+# 合同类型字典
+CONTRACT_TYPE = {
+    '技术': '技术',
+    '虚拟合同': '虚拟合同',
+    '销售物品': '销售物品',
+    '其他': '其他',
+    'default': '其他',
+
+}
+
+# 支付方式字典
+PAY_TYPE = {
+    '2:7:1': '2:7:1',
+    '3:3:2:1:1': '3:3:2:1:1',
+    '3:3:3.5:0.5': '3:3:3.5:0.5',
+    '3:3:3:1': '3:3:3:1',
+    '3:5:1:1': '3:5:1:1',
+    '3:6:1': '3:6:1',
+    '3:7': '3:7',
+    'default': '3:7',
 }
