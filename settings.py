@@ -1,6 +1,7 @@
 from cleaner.common import TimeFormatCleaner, FillBlankCleaner, FillAllCleaner, DictReplaceCleaner, StripUuidCleaner, StripStringCleaner
 from cleaner.compare import DateCompareCleaner
 from cleaner.generater import GenerateUuidCleaner, GenerateRandomNumberCleaner, GenerateSequenceCleaner
+from cleaner.mark import MarkCheckListCleaner
 from cleaner.masking import NameMaskingCleaner, HashMaskingCleaner, SegMaskingCleaner, SegHashMaskingCleaner, MoneyMaskingCleaner, \
     PhoneMaskingCleaner
 from cleaner.mock import MockAddressCleaner, MockCityCleaner, MockZipCodeCleaner, MockNameCleaner, MockCompanyCleaner, MockPhoneCleaner, \
@@ -42,6 +43,7 @@ CLEANER = {
     'MOCK_NUMBER': (MockSentenceCleaner, '模拟数字'),
     'MARK_SIMILARITY': (SimilarityCleaner, '标记相似推荐'),
     'MARK_DATE_COMPARE': (DateCompareCleaner, '标记日期大小'),
+    'MARK_CHECK_LIST': (MarkCheckListCleaner, '标记异常清单'),
 }
 
 # 客户类型字典
@@ -87,3 +89,8 @@ PAY_TYPE = {
     '3:7': '3:7',
     'default': '3:7',
 }
+
+CHECK_LIST = [
+    '2018-07-25',
+    '2014-05-08',
+]

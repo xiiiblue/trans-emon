@@ -1,6 +1,6 @@
 import unittest
 from pipeline.excel import ExcelPipeline
-from settings import PROJECT_SOURCE, CUST_TYPE, PROJECT_TYPE, CONTRACT_TYPE, PAY_TYPE
+from settings import PROJECT_SOURCE, CUST_TYPE, PROJECT_TYPE, CONTRACT_TYPE, PAY_TYPE, CHECK_LIST
 
 base_path = '/Users/bluexiii/Downloads/export/'
 
@@ -95,7 +95,8 @@ class TestPipeline(unittest.TestCase):
             ('*合同金额（元）', None, 'MASK_MONEY',),
             ('*合同开始日期', None, 'FILL_BLANK', '2000-01-01'),
             ('*合同结束日期', None, 'FILL_BLANK', '2050-12-31'),
-            ('日期比较', None, 'MARK_DATE_COMPARE', '*合同开始日期', '*合同结束日期'),
+            ('日期比较', '日期比较', 'MARK_DATE_COMPARE', '*合同开始日期', '*合同结束日期'),
+            ('*合同结束日期', '异常清单', 'MARK_CHECK_LIST', CHECK_LIST),
         ]
         pipeline = ExcelPipeline(path, rules)
         pipeline.process()
