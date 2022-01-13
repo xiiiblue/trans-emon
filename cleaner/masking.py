@@ -1,48 +1,50 @@
 import random
 import re
-import jieba
-
 import utils
-from processor import Processor
+from cleaner import Cleaner
+
+"""
+数据脱敏
+"""
 
 
-class PhoneMaskingProcessor(Processor):
+class PhoneMaskingCleaner(Cleaner):
     """
-    电话脱敏策略
+    电话脱敏
     """
 
-    def process(self, origin):
+    def clean(self, origin):
         if len(origin) > 4:
             return origin[0:2] + '*' * (len(origin) - 4) + origin[-2:len(origin)]
         else:
             return origin
 
 
-class NameMaskingProcessor(Processor):
+class NameMaskingCleaner(Cleaner):
     """
-    人名脱敏策略
+    人名脱敏
     """
 
-    def process(self, origin):
+    def clean(self, origin):
         pat = re.compile(r'(\w{1})(.*)')
         return pat.sub(r'\1**', origin)
 
 
-class MoneyMaskingProcessor(Processor):
+class MoneyMaskingCleaner(Cleaner):
     """
-    金额脱敏策略
+    金额脱敏
     """
 
-    def process(self, origin):
+    def clean(self, origin):
         return random.randint(0, 99999)
 
 
-class HashMaskingProcessor(Processor):
+class HashMaskingCleaner(Cleaner):
     """
-    哈希脱敏策略(相同的值可对应)
+    哈希脱敏(相同的值可对应)
     """
 
-    def process(self, origin):
+    def clean(self, origin):
         if len(origin) > 4:
             pat = re.compile(r'(\w{2})(.+)(\w{2})')
             hash = utils.md5_hash(origin)
@@ -51,12 +53,12 @@ class HashMaskingProcessor(Processor):
             return origin
 
 
-class SegMaskingProcessor(Processor):
+class SegMaskingCleaner(Cleaner):
     """
-    分词脱敏策略(增强可读性)
+    分词脱敏(增强可读性)
     """
 
-    def process(self, origin):
+    def clean(self, origin):
         seg_list = utils.word_segment(origin)
         seg_len = len(seg_list)
 
@@ -78,12 +80,12 @@ class SegMaskingProcessor(Processor):
         return mask_value
 
 
-class SegHashMaskingProcessor(SegMaskingProcessor):
+class SegHashMaskingCleaner(SegMaskingCleaner):
     """
-    分词加哈希脱敏策略
+    分词加哈希脱敏
     """
 
-    def process(self, origin):
-        seg_value = super().process(origin)
+    def clean(self, origin):
+        seg_value = super().clean(origin)
         hash_value = utils.md5_hash(origin, 8)
         return seg_value + hash_value

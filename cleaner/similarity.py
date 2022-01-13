@@ -1,20 +1,20 @@
 import utils
-from processor import Processor
+
+from cleaner import Cleaner
+
+"""
+相似度推荐
+"""
 
 
-class SimilarityProcessor(Processor):
-    """
-    相似度推荐
-    """
+class SimilarityCleaner(Cleaner):
 
     def __init__(self, *args):
+        super().__init__(*args)
         self.threshold = args[0]
-        print(f'threshold: {self.threshold}')
+        self.similarity_dict = {}
 
-    def process(self, origin):
-        pass
-
-    def pre_process(self, origin_col_id, repo):
+    def load(self, origin_col_id, repo):
         """
         预处理
         """
@@ -34,11 +34,13 @@ class SimilarityProcessor(Processor):
         # 比较相似度
         self.similarity_dict = self.do_similarity(sentence_dict)
 
-    def process_by_id(self, row_id):
+    def clean(self, origin):
+        pass
+
+    def clean_by_id(self, row_id):
         """
         相似度推荐
         """
-
         if row_id in self.similarity_dict:
             return self.similarity_dict[row_id]
 
@@ -62,12 +64,13 @@ class SimilarityProcessor(Processor):
 
             # 加入相似度推荐字典
             if similarity_list:
-                similarity_text = self.similarity_list_to_string(similarity_list)
+                similarity_text = self.list_to_string(similarity_list)
                 similarity_dict[src_row_id] = similarity_text
 
         return similarity_dict
 
-    def similarity_list_to_string(self, similarity_list):
+    @staticmethod
+    def list_to_string(similarity_list):
         """
         相似列表转文本
         """

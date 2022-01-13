@@ -2,7 +2,7 @@ from abc import abstractmethod
 
 
 @abstractmethod
-class Processor(object):
+class Cleaner(object):
     """
     Excel处理策略
     """
@@ -10,5 +10,5 @@ class Processor(object):
     def __init__(self, *args):
         pass
 
-    def process(self, origin):
+    def clean(self, origin):
         raise NotImplementedError

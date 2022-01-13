@@ -1,18 +1,22 @@
 import uuid
 
-from processor import Processor
+from cleaner import Cleaner
+
+"""
+通用清洗
+"""
 
 
-class TimeFormatProcessor(Processor):
+class TimeFormatCleaner(Cleaner):
     """
     时间格式化
     """
 
-    def process(self, origin):
+    def clean(self, origin):
         return origin[0:10]
 
 
-class FillBlankProcessor(Processor):
+class FillBlankCleaner(Cleaner):
     """
     空白填充
     """
@@ -20,12 +24,12 @@ class FillBlankProcessor(Processor):
     def __init__(self, *args):
         self.fill_data = args[0]
 
-    def process(self, origin):
+    def clean(self, origin):
         if not origin:
             return self.fill_data
 
 
-class FillAllProcessor(Processor):
+class FillAllCleaner(Cleaner):
     """
     全量填充
     """
@@ -33,19 +37,19 @@ class FillAllProcessor(Processor):
     def __init__(self, *args):
         self.fill_data = args[0]
 
-    def process(self, origin):
+    def clean(self, origin):
         return self.fill_data
 
 
-class DictProcessor(Processor):
+class DictReplaceCleaner(Cleaner):
     """
-    全量填充
+    字典替换
     """
 
     def __init__(self, *args):
         self.dict = args[0]
 
-    def process(self, origin):
+    def clean(self, origin):
         if origin in self.dict:
             return self.dict[origin]
         else:
@@ -53,7 +57,7 @@ class DictProcessor(Processor):
                 return self.dict['default']
 
 
-class UuidGenerateProcessor(Processor):
+class UuidGenerateCleaner(Cleaner):
     """
     UUID生成
     """
@@ -61,11 +65,11 @@ class UuidGenerateProcessor(Processor):
     def __init__(self, *args):
         self.length = args[0]
 
-    def process(self, origin):
+    def clean(self, origin):
         return str(uuid.uuid4()).replace('-', '')[0:self.length]
 
 
-class UuidStripProcessor(Processor):
+class UuidStripCleaner(Cleaner):
     """
     UUID截取
     """
@@ -73,5 +77,5 @@ class UuidStripProcessor(Processor):
     def __init__(self, *args):
         self.length = args[0]
 
-    def process(self, origin):
+    def clean(self, origin):
         return origin.replace('-', '')[0:self.length]

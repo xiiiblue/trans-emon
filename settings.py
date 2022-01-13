@@ -1,10 +1,11 @@
-from processor_common import TimeFormatProcessor, FillBlankProcessor, FillAllProcessor, DictProcessor, UuidGenerateProcessor, \
-    UuidStripProcessor
-from processor_masking import PhoneMaskingProcessor, NameMaskingProcessor, HashMaskingProcessor, SegMaskingProcessor, \
-    SegHashMaskingProcessor, MoneyMaskingProcessor
-from processor_similarity import SimilarityProcessor
+from cleaner.common import TimeFormatCleaner, FillBlankCleaner, FillAllCleaner, DictReplaceCleaner, UuidGenerateCleaner, UuidStripCleaner
+from cleaner.masking import NameMaskingCleaner, HashMaskingCleaner, SegMaskingCleaner, \
+    SegHashMaskingCleaner, MoneyMaskingCleaner
+from cleaner.similarity import SimilarityCleaner
 
 # 标题行号
+from cleaner.masking import PhoneMaskingCleaner
+
 TITLE_ROW = 1
 
 # 有效SHEET页
@@ -14,20 +15,20 @@ SHEET_IDX = 0
 FILE_SUFFIX = '(已加工)'
 
 # 数据处理器
-PROCESSORS = {
-    'MASK_PHONE': PhoneMaskingProcessor,  # 电话脱敏
-    'MASK_NAME': NameMaskingProcessor,  # 人名脱敏
-    'MASK_MONEY': MoneyMaskingProcessor,  # 金额脱敏
-    'MASK_HASH': HashMaskingProcessor,  # 哈希脱敏
-    'MASK_SEG': SegMaskingProcessor,  # 分词脱敏
-    'MASK_SEG_HASH': SegHashMaskingProcessor,  # 分词加哈希脱敏
-    'FORMAT_TIME': TimeFormatProcessor,  # 时间格式化
-    'SIMILARITY': SimilarityProcessor,  # 相似推荐
-    'FILL_BLANK': FillBlankProcessor,  # 空白填充
-    'FILL_ALL': FillAllProcessor,  # 全量填充
-    'DICT': DictProcessor,  # 字典替换
-    'UUID_GENERATE': UuidGenerateProcessor,  # UUID生成
-    'UUID_STRIP': UuidStripProcessor,  # UUID截取
+CLEANER = {
+    'MASK_PHONE': PhoneMaskingCleaner,  # 电话脱敏
+    'MASK_NAME': NameMaskingCleaner,  # 人名脱敏
+    'MASK_MONEY': MoneyMaskingCleaner,  # 金额脱敏
+    'MASK_HASH': HashMaskingCleaner,  # 哈希脱敏
+    'MASK_SEG': SegMaskingCleaner,  # 分词脱敏
+    'MASK_SEG_HASH': SegHashMaskingCleaner,  # 分词加哈希脱敏
+    'FORMAT_TIME': TimeFormatCleaner,  # 时间格式化
+    'SIMILARITY': SimilarityCleaner,  # 相似推荐
+    'FILL_BLANK': FillBlankCleaner,  # 空白填充
+    'FILL_ALL': FillAllCleaner,  # 全量填充
+    'DICT': DictReplaceCleaner,  # 字典替换
+    'UUID_GENERATE': UuidGenerateCleaner,  # UUID生成
+    'UUID_STRIP': UuidStripCleaner,  # UUID截取
 }
 
 # 客户字典

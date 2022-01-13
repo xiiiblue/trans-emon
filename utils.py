@@ -1,5 +1,4 @@
 import hashlib
-
 import jieba
 
 
@@ -7,7 +6,7 @@ def is_symbol(char):
     """
     判断是否为特殊字符
     """
-    symbols = "~!@#$%^&*()_+-*/<>,.[]\/（）【】，。《》"
+    symbols = "~!@#$%^&*()_+-*/<>,.[]/\（）【】，。《》"
     for symbol in symbols:
         if char == symbol:
             return True
@@ -37,7 +36,6 @@ def word_segment(sentence):
     """
     分词
     """
-    # 分词
     seg_list = jieba.lcut(sentence.strip())
 
     # 剔除特殊字符

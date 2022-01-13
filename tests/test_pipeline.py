@@ -1,9 +1,21 @@
 import unittest
 
 from pipeline import Pipeline
+from settings import CUST_DICT
 
 
 class TestPipeline(unittest.TestCase):
+
+    def test_pipeline_0(self):
+        """
+        客户管理
+        """
+        path = '/Users/bluexiii/Downloads/export/项目导入20220110103906.xls'
+        rules = [
+            ('*项目名称', '相似项目名称', 'SIMILARITY', 0.9),
+        ]
+        pipeline = Pipeline(path, rules)
+        pipeline.process()
 
     def test_pipeline_1(self):
         """
@@ -14,6 +26,7 @@ class TestPipeline(unittest.TestCase):
             ('*客户编号', None, 'UUID_STRIP', None),
             ('*客户名称', None, 'MASK_SEG_HASH', None),
             ('*客户简称', None, 'MASK_SEG_HASH', None),
+            ('*客户类型', None, 'DICT', CUST_DICT),
             ('联系人', None, 'MASK_NAME', None),
             ('电话', None, 'MASK_PHONE', None),
             ('地址', None, 'MASK_SEG', None),
