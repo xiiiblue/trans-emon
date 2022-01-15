@@ -26,5 +26,5 @@ TODO
 ## 命令行示例
 
 ```sh
-python trans_emon.py --file=/Users/bluexiii/Downloads/export/客户管理20220110103625.xls --config=config/cust.json
+python transemon.py --file=/Users/bluexiii/Downloads/export/客户管理20220110103625.xls --config=config/cust.json
 ```

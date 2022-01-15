@@ -1,6 +1,5 @@
 import json
 import os
-from pathlib import Path
 
 import fire
 
@@ -23,5 +22,9 @@ def cli(file, config):
     pipeline.process()
 
 
-if __name__ == '__main__':
+def entry():
     fire.Fire(cli)
+
+
+if __name__ == '__main__':
+    entry()
