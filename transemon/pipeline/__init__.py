@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from settings import CLEANER
+from transemon.settings import CLEANER
 
 """
 流水线

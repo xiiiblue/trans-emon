@@ -1,7 +1,7 @@
 import random
 
 from faker import Faker
-from cleaner import CellCleaner
+from transemon.cleaner import CellCleaner
 
 """
 数据模拟

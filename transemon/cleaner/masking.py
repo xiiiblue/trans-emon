@@ -1,7 +1,7 @@
 import random
 import re
-import utils
-from cleaner import CellCleaner
+from transemon import utils
+from transemon.cleaner import CellCleaner
 
 """
 数据脱敏

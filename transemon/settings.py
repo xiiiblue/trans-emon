@@ -1,13 +1,13 @@
-from cleaner.common import TimeFormatCleaner, FillBlankCleaner, FillAllCleaner, DictReplaceCleaner, StripUuidCleaner, StripStringCleaner
-from cleaner.compare import DateCompareCleaner
-from cleaner.duplicate import DuplicateCleaner
-from cleaner.generater import GenerateUuidCleaner, GenerateRandomNumberCleaner, GenerateSequenceCleaner
-from cleaner.mark import CheckListCleaner
-from cleaner.masking import NameMaskingCleaner, HashMaskingCleaner, SegMaskingCleaner, SegHashMaskingCleaner, MoneyMaskingCleaner, \
+from transemon.cleaner.common import TimeFormatCleaner, FillBlankCleaner, FillAllCleaner, DictReplaceCleaner, StripUuidCleaner, StripStringCleaner
+from transemon.cleaner.compare import DateCompareCleaner
+from transemon.cleaner.duplicate import DuplicateCleaner
+from transemon.cleaner.generater import GenerateUuidCleaner, GenerateRandomNumberCleaner, GenerateSequenceCleaner
+from transemon.cleaner.mark import CheckListCleaner
+from transemon.cleaner.masking import NameMaskingCleaner, HashMaskingCleaner, SegMaskingCleaner, SegHashMaskingCleaner, MoneyMaskingCleaner, \
     PhoneMaskingCleaner
-from cleaner.mock import MockAddressCleaner, MockCityCleaner, MockZipCodeCleaner, MockNameCleaner, MockCompanyCleaner, MockPhoneCleaner, \
+from transemon.cleaner.mock import MockAddressCleaner, MockCityCleaner, MockZipCodeCleaner, MockNameCleaner, MockCompanyCleaner, MockPhoneCleaner, \
     MockSentenceCleaner
-from cleaner.similarity import SimilarityCleaner
+from transemon.cleaner.similarity import SimilarityCleaner
 
 # 有效SHEET页
 SHEET_IDX = 0

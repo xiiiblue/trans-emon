@@ -1,4 +1,4 @@
-from cleaner import RowCleaner
+from transemon.cleaner import RowCleaner
 
 """
 标记重复

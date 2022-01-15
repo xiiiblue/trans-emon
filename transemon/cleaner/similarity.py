@@ -1,5 +1,5 @@
-import utils
-from cleaner import RowCleaner
+from transemon import utils
+from transemon.cleaner import RowCleaner
 
 """
 相似度推荐

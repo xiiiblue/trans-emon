@@ -7,10 +7,10 @@ setup(
     author_email="bluexiii@163.com",
     description="A Tool Pack For Excel Data Cleaning",
     url="https://www.bluexiii.com/",
-    packages=['.', 'cleaner', 'config', 'pipeline', 'repository'],
+    packages=['transemon', 'transemon.cleaner', 'transemon.config', 'transemon.pipeline', 'transemon.repository'],
     entry_points={
         'console_scripts': [
-            'transemon = transemon:entry'
+            'transemon = transemon.entry:entry'
         ]
     },
     install_requires=['xlutils', 'xlrd', 'jieba', 'faker'],

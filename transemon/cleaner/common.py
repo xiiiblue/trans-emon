@@ -1,4 +1,4 @@
-from cleaner import CellCleaner
+from transemon.cleaner import CellCleaner
 
 """
 通用清洗

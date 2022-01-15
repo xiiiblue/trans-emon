@@ -1,6 +1,6 @@
 import random
 import uuid
-from cleaner import CellCleaner
+from transemon.cleaner import CellCleaner
 
 """
 数据生成

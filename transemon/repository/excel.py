@@ -1,7 +1,7 @@
 from xlutils.copy import copy
 import xlrd
-from repository import Repository
-from settings import SHEET_IDX, TITLE_ROW, FILE_SUFFIX
+from transemon.repository import Repository
+from transemon.settings import SHEET_IDX, TITLE_ROW, FILE_SUFFIX
 
 """
 Excel仓库
