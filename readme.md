@@ -22,3 +22,9 @@ TRANS-EMON是一个用于Excel方式数据迁移的工具箱，支持多种数�
 ## 使用帮助
 
 TODO
+
+## 命令行示例
+
+```sh
+python trans_emon.py --file=/Users/bluexiii/Downloads/export/客户管理20220110103625.xls --config=config/cust.json
+```

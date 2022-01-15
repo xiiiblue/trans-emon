@@ -15,10 +15,13 @@ class ExcelPipeline(Pipeline):
 
     def process(self):
         # 遍历规则
-        for index, (origin_col_name, target_col_name, method, *args) in enumerate(self.rules):
+        for index, (col_name, method, *args) in enumerate(self.rules):
             # 获取原始列ID及目标列ID
+            origin_col_name = col_name.split('|')[0]
+            target_col_name = col_name.split('|')[1] if len(col_name.split('|')) > 1 else origin_col_name
+
             origin_col_id = self.repository.get_col_by_title(origin_col_name)
-            target_col_id = self.repository.get_col_by_title(target_col_name) if target_col_name else origin_col_id
+            target_col_id = self.repository.get_col_by_title(target_col_name)
 
             # 初始化数据处理器
             cleaner = self.get_cleaner(method, *args)
