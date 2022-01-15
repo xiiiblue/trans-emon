@@ -1,6 +1,6 @@
 import unittest
 from pipeline.excel import ExcelPipeline
-from settings import PROJECT_SOURCE, CUST_TYPE, PROJECT_TYPE, CONTRACT_TYPE, PAY_TYPE, CHECK_LIST
+from settings import PROJECT_SOURCE, CUST_TYPE, PROJECT_TYPE, PAY_TYPE, CHECK_LIST, INCOME_CONTRACT_TYPE
 
 base_path = '/Users/bluexiii/Downloads/export/'
 
@@ -85,7 +85,7 @@ class TestPipeline(unittest.TestCase):
             ('*甲方联系人', None, 'MOCK_NAME',),
             ('联系电话', None, 'MOCK_PHONE',),
             ('*合同乙方', None, 'FILL_ALL', '山东亿云信息'),
-            ('*合同类型', None, 'DICT_REPLACE', CONTRACT_TYPE),
+            ('*合同类型', None, 'DICT_REPLACE', INCOME_CONTRACT_TYPE),
             ('*支付方式', None, 'DICT_REPLACE', PAY_TYPE),
             ('*市场负责人', None, 'FILL_ALL', 'zhangm'),
             ('*销售部门', None, 'FILL_ALL', '云服务事业部'),
@@ -98,6 +98,43 @@ class TestPipeline(unittest.TestCase):
             ('日期比较', '日期比较', 'MARK_DATE_COMPARE', '*合同开始日期', '*合同结束日期'),
             ('*合同结束日期', '异常清单', 'MARK_CHECK_LIST', CHECK_LIST),
             ('*收入合同编号', '重复次数', 'MARK_DUPLICATE',),
+        ]
+        pipeline = ExcelPipeline(path, rules)
+        pipeline.process()
+
+    def test_pipeline_5(self):
+        """
+        成本合同
+        """
+        path = f'{base_path}成本合同20220110235959(1).xls'
+        rules = [
+            ('*合同编号', None, 'STRIP_UUID',),
+            ('*合同名称', None, 'MOCK_SENTENCE',),
+            ('*合同甲方', None, 'FILL_ALL', '山东亿云信息'),
+            ('*合同乙方', None, 'FILL_ALL', '山东**公司61d6d6674a0f0903'),
+            ('*乙方联系人', None, 'MOCK_NAME',),
+            ('*合同类型', None, 'FILL_ALL', '实施技术外采'),
+            ('*支付方式', None, 'DICT_REPLACE', PAY_TYPE),
+            ('*申请人', None, 'FILL_ALL', 'zhangm'),
+            ('*合同负责人', None, 'FILL_ALL', 'zhangm'),
+            ('*所属部门', None, 'FILL_ALL', '云服务事业部'),
+            ('*项目编号', None, 'FILL_ALL', '3000000590'),
+            ('*税率', None, 'FILL_BLANK', '10%'),
+            ('*合同开始时间', None, 'FILL_BLANK', '2000-01-01'),
+            ('*合同结束时间', None, 'FILL_BLANK', '2050-12-31'),
+            ('*合同编号', '重复次数', 'MARK_DUPLICATE',),
+        ]
+        pipeline = ExcelPipeline(path, rules)
+        pipeline.process()
+
+    def test_pipeline_6(self):
+        """
+        回款
+        """
+        path = f'{base_path}回款20220110235959(1).xls'
+        rules = [
+            ('*回款编号', None, 'STRIP_UUID',),
+            ('*认领金额(元)', None, 'MASK_MONEY',),
         ]
         pipeline = ExcelPipeline(path, rules)
         pipeline.process()
