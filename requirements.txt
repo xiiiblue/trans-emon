@@ -2,3 +2,4 @@ xlutils
 xlrd
 jieba
 faker
+fire

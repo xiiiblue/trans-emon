@@ -1,6 +1,6 @@
 import unittest
-from pipeline.excel import ExcelPipeline
-from config.dicts import PROJECT_SOURCE, CUST_TYPE, PROJECT_TYPE, PAY_TYPE, CHECK_LIST, INCOME_CONTRACT_TYPE
+from transemon.pipeline.excel import ExcelPipeline
+from transemon.config.dicts import PROJECT_SOURCE, CUST_TYPE, PROJECT_TYPE, PAY_TYPE, CHECK_LIST, INCOME_CONTRACT_TYPE
 
 base_path = "/Users/bluexiii/Downloads/export/"
 
@@ -13,7 +13,7 @@ class TestPipeline(unittest.TestCase):
         """
         path = f"{base_path}项目导入20220110103906.xls"
         rules = [
-            ["项目名称", "相似项目名称", "MARK_SIMILARITY", 0.9],
+            ["项目名称|相似项目名称", "MARK_SIMILARITY", 0.9],
         ]
         pipeline = ExcelPipeline(path, rules)
         pipeline.process()

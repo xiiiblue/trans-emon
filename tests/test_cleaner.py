@@ -1,9 +1,9 @@
 import unittest
 
-from cleaner.common import StripUuidCleaner
-from cleaner.masking import SegMaskingCleaner, SegHashMaskingCleaner, HashMaskingCleaner, MoneyMaskingCleaner, \
+from transemon.cleaner.common import StripUuidCleaner
+from transemon.cleaner.masking import SegMaskingCleaner, SegHashMaskingCleaner, HashMaskingCleaner, MoneyMaskingCleaner, \
     NameMaskingCleaner, PhoneMaskingCleaner
-from cleaner.mock import MockNameCleaner
+from transemon.cleaner.mock import MockNameCleaner
 
 
 class TestCleaner(unittest.TestCase):

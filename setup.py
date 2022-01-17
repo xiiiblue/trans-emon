@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name='transemon',
@@ -10,8 +10,8 @@ setup(
     packages=['transemon', 'transemon.cleaner', 'transemon.config', 'transemon.pipeline', 'transemon.repository'],
     entry_points={
         'console_scripts': [
-            'transemon = transemon.entry:entry'
+            'transemon = transemon:bootstrap'
         ]
     },
-    install_requires=['xlutils', 'xlrd', 'jieba', 'faker'],
+    install_requires=['xlutils', 'xlrd', 'jieba', 'faker', 'fire'],
 )
