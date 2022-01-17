@@ -1,6 +1,6 @@
 import unittest
 from transemon.pipeline.excel import ExcelPipeline
-from transemon.config.dicts import PROJECT_SOURCE, CUST_TYPE, PROJECT_TYPE, PAY_TYPE, CHECK_LIST, INCOME_CONTRACT_TYPE
+from config.dicts import PROJECT_SOURCE, CUST_TYPE, PROJECT_TYPE, PAY_TYPE, CHECK_LIST, INCOME_CONTRACT_TYPE
 
 base_path = "/Users/bluexiii/Downloads/export/"
 
@@ -127,14 +127,18 @@ class TestPipeline(unittest.TestCase):
         pipeline = ExcelPipeline(path, rules)
         pipeline.process()
 
-    def test_pipeline_6(self):
+    def test_pipeline_5_2(self):
         """
         回款
         """
-        path = f"{base_path}回款20220110235959(1).xls"
+        path = f"{base_path}回款测试.xls"
         rules = [
             ["*回款编号", "STRIP_UUID"],
+            ["*回款单位", "MASK_SEG_HASH"],
             ["*认领金额(元)", "MASK_MONEY"],
+            ["*收入合同编号", "STRIP_UUID"],
+            ["*项目编号", "STRIP_UUID"],
+            ["*认领人", "FILL_BLANK", "zhangm"],
         ]
         pipeline = ExcelPipeline(path, rules)
         pipeline.process()

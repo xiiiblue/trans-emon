@@ -1,7 +1,7 @@
 # TRANS-EMON
 
 ## 简介
-TRANS-EMON是一个用于Excel方式的数据清洗工具箱，支持多种清洗策略，支持流水线配置
+TRANS-EMON是一个Excel方式的数据清洗工具箱，支持多种清洗策略，支持流水线配置
 
 ## 清洗策略
 目前包含6大类，27个数据清洗工具
@@ -53,19 +53,20 @@ TRANS-EMON是一个用于Excel方式的数据清洗工具箱，支持多种清�
 
 
 ## 流水线配置
-以下是一个JSON格式的流水线配置示例: 
+以下是一个JSON格式的流水线配置示例:   
 ```json
 [
     ["*项目编号", "STRIP_UUID"],
     ["*项目名称", "MASK_SEG_HASH"],
     ["*项目类型", "DICT_REPLACE", {"foo": "bar"}],
     ["*立项申请人", "FILL_BLANK", "张三"],
-    ["*所属部门", "FILL_BLANK", "亿云"],
+    ["*所属部门", "FILL_BLANK", "市场部"],
     ["*项目金额", "MASK_MONEY"],
     ["*立项时间", "FORMAT_TIME"],
     ["*计划验收时间", "FILL_ALL", "2000-01-01"],
     ["*计划结项日期", "FORMAT_TIME"],
-    ["*计划结项日期", "FILL_BLANK", "2099-12-31"]
+    ["*计划结项日期", "FILL_BLANK", "2099-12-31"],
+    ["*收入合同编号|重复次数", "MARK_DUPLICATE"]
 ]
 ```
 - JSON配置的格式为双重数组，每一行即为一个流水线步骤
@@ -74,53 +75,55 @@ TRANS-EMON是一个用于Excel方式的数据清洗工具箱，支持多种清�
 - 部分策略需要传入参数，例如“FILL_BLANK”填充，需要在策略中写入参数。参数可以有一个或多个，直接在数组后方追加即可。
 
 ## 应用安装
-1. 要求Python3运行环境，简易使用MiniConda
+1. 要求Python3运行环境，推荐使用MiniConda
 
-2. 使用setup脚本安装到系统目录，并生成可执行shell脚本
-```sh
-python setup.py install
-```
-
-3. 执行`transemon --help`查看安装是否正确
+2. 使用setup.py安装到系统目录，并生成`transemon`可执行命令
+    ```sh
+    python setup.py install
+    ```
+3. 执行`transemon --help`检查是否安装成功
 
 
 ## 使用帮助
 ### 命令方式
 1. 需要提前通过setup.py进行安装
 2. 安装后，直接在任意目录执行:  
-```sh
-transemon --file=客户管理20220110103625.xls --config=config/cust.json
-或
-transemon 客户管理20220110103625.xls config/cust.json
-```
+    ```sh
+    transemon --file=客户管理20220110103625.xls --config=config/cust.json
+    ```
+    或
+    ```sh
+    transemon 客户管理20220110103625.xls config/cust.json
+    ```
+3. `--file`参数为原始Excel的路径，`--config`参数为流水线配置JSON的路径
+4. 路径可以是相对路径，也可以是绝对路径
 
 ### 源码方式
-1. 源码方式运行与系统命令类似，需要cd进入到源码目录
-2. 源码方式的优势是方便调试
-```
-cd 应用目录
-python transemon.py --file=/path/to/客户管理20220110103625.xls --config=/path/to/config/cust.json
-```
+1. 源码方式运行与系统命令类似，需要cd进入到源码目录并执行:  
+    ```
+    cd 应用目录
+    python transemon.py --file=/path/to/客户管理20220110103625.xls --config=/path/to/config/cust.json
+    ```
+2. 源码方式的运行优势是方便DEBUG
 
 ### 单元测试方式
-1. 单元测试方式，不需要单独的JSON，配置上更加快捷
+1. 单元测试方式，不需要单独的JSON配置文件，批量测试时更加快捷
 2. 需要PyCharm等IDE，直接在IDE中执行`test`目录下的测试用例即可
-
-UnitTest示例: 
-```
-def test_pipeline_1(self):
-    """
-    客户管理
-    """
-    path = f"/path/to/客户管理20220110103625.xls"
-    rules = [
-        ["*客户编号", "STRIP_UUID"],
-        ["*客户名称", "MASK_SEG_HASH"],
-        ["联系人", "MASK_NAME"],
-        ["联系人", "FILL_BLANK", "张三"],
-        ["电话", "MOCK_PHONE"],
-        ["法定代表人", "MOCK_NAME"],
-    ]
-    pipeline = ExcelPipeline(path, rules)
-    pipeline.process()
-```
+3. UnitTest示例: 
+    ```
+    def test_pipeline_1(self):
+        """
+        客户管理
+        """
+        path = f"/path/to/客户管理20220110103625.xls"
+        rules = [
+            ["*客户编号", "STRIP_UUID"],
+            ["*客户名称", "MASK_SEG_HASH"],
+            ["联系人", "MASK_NAME"],
+            ["联系人", "FILL_BLANK", "张三"],
+            ["电话", "MOCK_PHONE"],
+            ["法定代表人", "MOCK_NAME"],
+        ]
+        pipeline = ExcelPipeline(path, rules)
+        pipeline.process()
+    ```

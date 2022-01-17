@@ -1,24 +1,46 @@
-from transemon.cleaner.common import TimeFormatCleaner, FillBlankCleaner, FillAllCleaner, DictReplaceCleaner, StripUuidCleaner, StripStringCleaner
+import os
+from transemon.cleaner.common import TimeFormatCleaner, FillBlankCleaner, FillAllCleaner, DictReplaceCleaner, StripUuidCleaner, \
+    StripStringCleaner
 from transemon.cleaner.compare import DateCompareCleaner
 from transemon.cleaner.duplicate import DuplicateCleaner
 from transemon.cleaner.generater import GenerateUuidCleaner, GenerateRandomNumberCleaner, GenerateSequenceCleaner
 from transemon.cleaner.mark import CheckListCleaner
 from transemon.cleaner.masking import NameMaskingCleaner, HashMaskingCleaner, SegMaskingCleaner, SegHashMaskingCleaner, MoneyMaskingCleaner, \
     PhoneMaskingCleaner
-from transemon.cleaner.mock import MockAddressCleaner, MockCityCleaner, MockZipCodeCleaner, MockNameCleaner, MockCompanyCleaner, MockPhoneCleaner, \
+from transemon.cleaner.mock import MockAddressCleaner, MockCityCleaner, MockZipCodeCleaner, MockNameCleaner, MockCompanyCleaner, \
+    MockPhoneCleaner, \
     MockSentenceCleaner
 from transemon.cleaner.similarity import SimilarityCleaner
 
-# 有效SHEET页
-SHEET_IDX = 0
 
-# 标题行号
-TITLE_ROW = 1
+def get_settings(var):
+    """
+    获取配置
+    """
+    if f'TE_{var}' in os.environ:
+        return os.environ.get(f'TE_{var}')
+    else:
+        if var in SETTINGS:
+            return SETTINGS[var]
+        else:
+            return None
 
-# 输出文件后缀
-FILE_SUFFIX = "(已清洗)"
 
-# 数据清洗器
+def set_settings(var, val):
+    """
+    覆盖配置
+    """
+    os.environ.setdefault(var, str(val))
+
+
+# 全局默认参数
+SETTINGS = {
+    'SHEET_IDX': 0,
+    'TITLE_ROW': 1,
+    'FILE_SUFFIX': "(已清洗)",
+}
+
+# 数据清洗器配置
 CLEANER = {
     # 数据脱敏类
     "MASK_PHONE": (PhoneMaskingCleaner, "脱敏电话号码"),

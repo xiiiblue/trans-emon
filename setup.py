@@ -7,7 +7,7 @@ setup(
     author_email="bluexiii@163.com",
     description="A Tool Pack For Excel Data Cleaning",
     url="https://www.bluexiii.com/",
-    packages=['transemon', 'transemon.cleaner', 'transemon.config', 'transemon.pipeline', 'transemon.repository'],
+    packages=['transemon', 'transemon.cleaner', 'transemon.pipeline', 'transemon.repository'],
     entry_points={
         'console_scripts': [
             'transemon = transemon:bootstrap'

@@ -1,7 +1,7 @@
 from xlutils.copy import copy
 import xlrd
 from transemon.repository import Repository
-from transemon.settings import SHEET_IDX, TITLE_ROW, FILE_SUFFIX
+from transemon.settings import get_settings
 
 """
 Excel仓库
@@ -15,6 +15,12 @@ class ExcelRepository(Repository):
         初始化Excel
         """
         print(f'打开Excel: {src_path}')
+
+        # 获取配置
+        self.sheet_idx = int(get_settings('SHEET_IDX'))
+        self.title_row = int(get_settings('TITLE_ROW'))
+        self.file_suffix = str(get_settings('FILE_SUFFIX'))
+
         # 原始路径
         self.src_path = src_path
 
@@ -23,14 +29,14 @@ class ExcelRepository(Repository):
         self.write_book = copy(self.read_book)
 
         # 打开Sheet页
-        self.read_sheet = self.read_book.sheet_by_index(SHEET_IDX)
-        self.write_sheet = self.write_book.get_sheet(SHEET_IDX)
+        self.read_sheet = self.read_book.sheet_by_index(self.sheet_idx)
+        self.write_sheet = self.write_book.get_sheet(self.sheet_idx)
 
         # 总行数
         self.row_count = self.read_sheet.nrows
 
         # 标题行ID
-        self.title_row_id = TITLE_ROW
+        self.title_row_id = self.title_row
 
         # 标题行
         self.titles = self.read_sheet.row_values(self.title_row_id)
@@ -69,7 +75,7 @@ class ExcelRepository(Repository):
         """
         保存Excel
         """
-        self.save_by_suffix(FILE_SUFFIX)
+        self.save_by_suffix(self.file_suffix)
 
     def get_col_by_title(self, title_name):
         """
