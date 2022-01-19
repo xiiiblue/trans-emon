@@ -65,6 +65,8 @@ class DictReplaceCleaner(CellCleaner):
         else:
             if 'default' in self.dict:
                 return self.dict['default']
+            else:
+                return origin
 
 
 class StripUuidCleaner(CellCleaner):
