@@ -53,6 +53,15 @@ class HashMaskingCleaner(CellCleaner):
             return origin
 
 
+class HashAllMaskingCleaner(CellCleaner):
+    """
+    全哈希脱敏(相同的值可对应)
+    """
+
+    def clean(self, origin=None):
+        return utils.md5_hash(origin)
+
+
 class SegMaskingCleaner(CellCleaner):
     """
     分词脱敏(增强可读性)

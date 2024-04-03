@@ -5,8 +5,9 @@ from transemon.cleaner.compare import DateCompareCleaner
 from transemon.cleaner.duplicate import DuplicateCleaner
 from transemon.cleaner.generater import GenerateUuidCleaner, GenerateRandomNumberCleaner, GenerateSequenceCleaner
 from transemon.cleaner.mark import CheckListCleaner
-from transemon.cleaner.masking import NameMaskingCleaner, HashMaskingCleaner, SegMaskingCleaner, SegHashMaskingCleaner, MoneyMaskingCleaner, \
-    PhoneMaskingCleaner
+from transemon.cleaner.masking import NameMaskingCleaner, HashMaskingCleaner, SegMaskingCleaner, SegHashMaskingCleaner, \
+    MoneyMaskingCleaner, \
+    PhoneMaskingCleaner, HashAllMaskingCleaner
 from transemon.cleaner.mock import MockAddressCleaner, MockCityCleaner, MockZipCodeCleaner, MockNameCleaner, MockCompanyCleaner, \
     MockPhoneCleaner, \
     MockSentenceCleaner
@@ -36,7 +37,7 @@ def set_settings(var, val):
 # 全局默认参数
 SETTINGS = {
     'SHEET_IDX': 0,
-    'TITLE_ROW': 1,
+    'TITLE_ROW': 0,
     'FILE_SUFFIX': "(已清洗)",
 }
 
@@ -47,6 +48,7 @@ CLEANER = {
     "MASK_NAME": (NameMaskingCleaner, "脱敏姓名"),
     "MASK_MONEY": (MoneyMaskingCleaner, "脱敏金额"),
     "MASK_HASH": (HashMaskingCleaner, "脱敏为哈希"),
+    "MASK_HASH_ALL": (HashAllMaskingCleaner, "脱敏为全哈希"),
     "MASK_SEG": (SegMaskingCleaner, "脱敏为分词"),
     "MASK_SEG_HASH": (SegHashMaskingCleaner, "脱敏为分词加哈希"),
     # 数据模拟类
