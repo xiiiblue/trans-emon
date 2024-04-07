@@ -32,7 +32,7 @@ def md5_hash(origin, length=16):
     return md5.hexdigest()[0:length]
 
 
-def sha3_hash(origin, length=32):
+def sha3_hash(origin, length=64):
     """
     获取SHA3-256哈希值
     """
