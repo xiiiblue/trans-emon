@@ -55,11 +55,19 @@ class HashMaskingCleaner(CellCleaner):
 
 class HashAllMaskingCleaner(CellCleaner):
     """
-    全哈希脱敏(相同的值可对应)
+    MD5全哈希脱敏(相同的值可对应)
     """
 
     def clean(self, origin=None):
         return utils.md5_hash(origin)
+
+class Sha3AllMaskingCleaner(CellCleaner):
+    """
+    SHA3全哈希脱敏(相同的值可对应)
+    """
+
+    def clean(self, origin=None):
+        return utils.md5_hash(origin,9999)
 
 
 class SegMaskingCleaner(CellCleaner):

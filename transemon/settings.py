@@ -7,7 +7,7 @@ from transemon.cleaner.generater import GenerateUuidCleaner, GenerateRandomNumbe
 from transemon.cleaner.mark import CheckListCleaner
 from transemon.cleaner.masking import NameMaskingCleaner, HashMaskingCleaner, SegMaskingCleaner, SegHashMaskingCleaner, \
     MoneyMaskingCleaner, \
-    PhoneMaskingCleaner, HashAllMaskingCleaner
+    PhoneMaskingCleaner, HashAllMaskingCleaner, Sha3AllMaskingCleaner
 from transemon.cleaner.mock import MockAddressCleaner, MockCityCleaner, MockZipCodeCleaner, MockNameCleaner, MockCompanyCleaner, \
     MockPhoneCleaner, \
     MockSentenceCleaner
@@ -47,8 +47,9 @@ CLEANER = {
     "MASK_PHONE": (PhoneMaskingCleaner, "脱敏电话号码"),
     "MASK_NAME": (NameMaskingCleaner, "脱敏姓名"),
     "MASK_MONEY": (MoneyMaskingCleaner, "脱敏金额"),
-    "MASK_HASH": (HashMaskingCleaner, "脱敏为哈希"),
-    "MASK_HASH_ALL": (HashAllMaskingCleaner, "脱敏为全哈希"),
+    "MASK_HASH": (HashMaskingCleaner, "脱敏为MD5哈希"),
+    "MASK_HASH_ALL": (HashAllMaskingCleaner, "脱敏为MD5全哈希"),
+    "MASK_SHA3_HASH_ALL": (Sha3AllMaskingCleaner, "脱敏为SHA3全哈希"),
     "MASK_SEG": (SegMaskingCleaner, "脱敏为分词"),
     "MASK_SEG_HASH": (SegHashMaskingCleaner, "脱敏为分词加哈希"),
     # 数据模拟类

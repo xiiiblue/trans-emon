@@ -25,11 +25,20 @@ def oc_similarity(list_a, list_b):
 
 def md5_hash(origin, length=16):
     """
-    获取哈希值
+    获取MD5哈希值
     """
     md5 = hashlib.md5()
     md5.update(origin.encode('utf-8'))
     return md5.hexdigest()[0:length]
+
+
+def sha3_hash(origin, length=32):
+    """
+    获取SHA3-256哈希值
+    """
+    sha = hashlib.sha3_256()
+    sha.update(origin.encode('utf-8'))
+    return sha.hexdigest()[0:length]
 
 
 def word_segment(sentence):
